@@ -2,7 +2,6 @@ package Persistencia;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import Dominio.Cliente;
@@ -11,6 +10,10 @@ public class ClienteDAO {
     private Conexao conexaoClienteDao;
     private String RelatorioCliente = "select * from \"Cliente\"";
     private String BUS = "select * from \"Cliente\" where \"pk_cpf\"=?";
+
+    public ClienteDAO(){
+        conexaoClienteDao = new Conexao("postgres", "123", "jdbc:postgresql://localhost:5432/postgres");
+    }
 
     public ArrayList<Cliente> emitirRelatorioClientes(){
         Cliente pessoa;
@@ -25,7 +28,7 @@ public class ClienteDAO {
             }
             conexaoClienteDao.desconectar();
         } catch (Exception e){
-            System.out.println();
+            System.out.println("Erro no relatorio");
         }
         return lista;
     }

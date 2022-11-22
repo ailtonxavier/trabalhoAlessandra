@@ -16,13 +16,13 @@ public class Cliente {
     }
 
     // Getters
-    public int getCpf(){return pk_cpf;}
+    public int getPk_cpf(){return pk_cpf;}
     public String getNome(){return nome;}
     public String getLogin(){return login;}
     public String getSenha(){return senha;}
     public boolean getAtivo(){return ativo;}
     // Setters
-    public void setCpf(int pk_cpf){this.pk_cpf = pk_cpf;}
+    public void setPk_cpf(int pk_cpf){this.pk_cpf = pk_cpf;}
     public void setNome(String nome){this.nome = nome;}
     public void setLogin(String login){this.login = login;}
     public void setSenha(String senha){this.senha = senha;}
