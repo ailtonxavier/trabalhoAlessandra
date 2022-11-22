@@ -7,7 +7,7 @@ public class Conexao {
     private String usuario;
     private String senha;
     private String caminho;
-    private Connection con;
+    private Connection minhaConexao;
 
     public Conexao(String usuario, String senha, String caminho){
         this.usuario = usuario;
@@ -18,7 +18,7 @@ public class Conexao {
     public void conectar(){
         try{
             Class.forName("org.postgresql.Driver");
-            con = DriverManager.getConnection(caminho, usuario, senha);
+            minhaConexao = DriverManager.getConnection(caminho, usuario, senha);
         } catch (Exception e){
             System.out.println("Erro na conexão com o banco: "+ e.getMessage());
         }
@@ -26,12 +26,12 @@ public class Conexao {
 
     public void desconectar(){
         try {
-            con.close();
+            minhaConexao.close();
         } catch (Exception e) {
             System.out.println("Erro na desconexão com o banco: " + e.getMessage());
         }
     }
     public Connection getConexao(){
-        return con;
+        return minhaConexao;
     }
 }
