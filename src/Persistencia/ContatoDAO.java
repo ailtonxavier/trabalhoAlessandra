@@ -20,7 +20,7 @@ public class ContatoDAO {
         ArrayList<Contato> lista = new ArrayList<Contato>();
         try {
             conexaoContatoDao.conectar();
-            Statement instrucao = conexaoClienteDao.getConexao().createStatement();
+            Statement instrucao = conexaoContatoDao.getConexao().createStatement();
             ResultSet rs = instrucao.executeQuery(RelatorioContatos);
             while(rs.next()){
                 pessoa = new Contato(rs.getInt("pk_fk_cpf"),rs.getString("email"), rs.getString("telefone"), rs.getString("telFixo"), rs.getString("telComercial"));
