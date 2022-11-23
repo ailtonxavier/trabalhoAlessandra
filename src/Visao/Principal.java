@@ -71,6 +71,6 @@ public class Principal {
         System.out.println("1 - BUSCAR PELO CPF")
         System.out.println("2 - BUSCAR PELO NOME")
         System.out.println("3 - VOLTAR AO MENU PRINCIPAL")
-        * */
+         */
     }
 }
