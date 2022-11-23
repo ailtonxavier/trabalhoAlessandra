@@ -10,7 +10,7 @@ public class ClienteDAO {
     private Conexao conexaoClienteDao;
     private String RelatorioCliente = "select * from \"Cliente\"";
     private String BUS = "select * from \"Cliente\" where \"pk_cpf\"=?";
-
+    int a;
     public ClienteDAO(){
         conexaoClienteDao = new Conexao("postgres", "123", "jdbc:postgresql://localhost:5432/postgres");
     }
