@@ -1,12 +1,22 @@
 package Dominio;
 
 import Dominio.Cliente;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 public class Contato {
     private int pk_fk_cpf;
     private String email;
     private String celular;
     private String telFixo;
     private String telComercial;
+
+    public Contato(){
+
+    }
+
+
 
     public Contato(int pk_fk_cpf, String email, String celular, String telFixo, String telComercial) {
         this.pk_fk_cpf = pk_fk_cpf;
