@@ -1,2 +1,4 @@
-package Persistencia;public class CampoDAO {
+package Persistencia;
+import Dominio.Campo;
+public class CampoDAO {
 }
