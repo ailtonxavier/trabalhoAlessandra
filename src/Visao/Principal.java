@@ -6,10 +6,11 @@ import Persistencia.ClienteDAO;
 import java.util.Scanner;
 public class Principal {
     public static void main(String arg[]){
-        int op, i;
+        int op, i, idaux;
         ArrayList<Cliente> clientes = new ArrayList<Cliente>();
         ClienteDAO cliDAO = new ClienteDAO();
         Scanner teclado = new Scanner(System.in);
+        Cliente client;
         do {
             System.out.println("--------------------------");
             System.out.println("           MENU           ");
@@ -25,7 +26,24 @@ public class Principal {
             System.out.println("8 - SAIR DO SISTEMA");
             op = teclado.nextInt();
             switch (op){
-                case 1: break;
+                case 1:
+                    System.out.println("CADASTRANDO CLIENTE\n");
+                    System.out.println("DIGITE O CPF DO CLIENTE: ");
+                    idaux = teclado.nextInt();
+                    teclado.nextLine();
+                    client = cliDAO.buscar(idaux);
+                    if(client==null){
+                        client = new Cliente();
+                        client.setPk_cpf(idaux);
+                        System.out.println("DIGITE O NOME DO CLIENTE: ");
+                        client.setNome(teclado.nextLine());
+                        System.out.println("DIGITE O LOGIN DO CLIENTE: ");
+                        client.setLogin(teclado.nextLine());
+                        System.out.println("DIGITE A SENHA DO CLIENTE: ");
+                        client.setSenha(teclado.nextLine());
+                        client.isAtivo(true);
+                    }
+                    break;
                 case 2: break;
                 case 3:
                     System.out.println("RELATÓRIO DE CLIENTES");

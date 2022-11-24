@@ -7,6 +7,12 @@ public class Cliente {
     private String senha;
     private boolean ativo;
 
+    //Construtor vazio
+    public Cliente(){
+
+    }
+
+
     public Cliente(int pk_cpf, String nome, String login, String senha, boolean ativo){
         this.pk_cpf = pk_cpf;
         this.nome = nome;
@@ -26,4 +32,5 @@ public class Cliente {
     public void setNome(String nome){this.nome = nome;}
     public void setLogin(String login){this.login = login;}
     public void setSenha(String senha){this.senha = senha;}
+    public boolean isAtivo(boolean b) {return ativo; }
 }
