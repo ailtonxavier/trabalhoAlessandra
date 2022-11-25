@@ -79,7 +79,8 @@ public class Principal {
                         client.setLogin(teclado.nextLine());
                         System.out.println("DIGITE A SENHA DO CLIENTE: ");
                         client.setSenha(teclado.nextLine());
-                        client.isAtivo(true);
+
+                        cliDAO.incluir(client);
                     }
                     break;
                 case 2:

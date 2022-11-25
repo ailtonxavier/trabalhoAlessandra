@@ -5,7 +5,7 @@ public class Campo {
     private int fk_pk_idAluguel;
     private static final int valorHora = 50;
     private boolean ocupado;
-    private int capacidade;
+    private static final int capacidade = 50;
 
     public Campo(){
 
@@ -14,7 +14,6 @@ public class Campo {
     public Campo(int fk_pk_idAluguel, int valorHora, boolean ocupado, int capacidade){
         this.fk_pk_idAluguel = fk_pk_idAluguel;
         this.ocupado = ocupado;
-        this.capacidade = capacidade;
     }
 
     //getters
@@ -25,6 +24,5 @@ public class Campo {
 
     //setters
     public void setFk_pk_idAluguel(int fk_pk_idAluguel) {this.fk_pk_idAluguel = fk_pk_idAluguel;}
-    public void setCapacidade(int capacidade) {this.capacidade = capacidade;}
     public void setOcupado(boolean ocupado) {this.ocupado = ocupado;}
 }

@@ -11,6 +11,7 @@ public class ClienteDAO {
     private Conexao conexaoClienteDao;
     private String RelatorioCliente = "select * from \"Cliente\"";
     private String BuscarCliente = "select * from \"Cliente\" where \"pk_cpf\"=?";
+    private String InserirCliente = "insert into \"Cliente\" (\"pk_cpf\",\"nome\",\"login\",\"senha\",\"ativo\") values (?,?,?,?,?)";
     
     public ClienteDAO(){
         conexaoClienteDao = new Conexao("postgres", "123", "jdbc:postgresql://localhost:5432/postgres");
@@ -32,6 +33,21 @@ public class ClienteDAO {
         }
         return pessoa;
 
+    }
+
+    public void incluir(Cliente pessoa){
+        try{
+            conexaoClienteDao.conectar();
+            PreparedStatement inclusao = conexaoClienteDao.getConexao().prepareStatement(InserirCliente);
+            inclusao.setInt(1,pessoa.getPk_cpf());
+            inclusao.setString(2, pessoa.getNome());
+            inclusao.setString(3, pessoa.getLogin());
+            inclusao.setString(4, pessoa.getSenha());
+            inclusao.setBoolean(5,pessoa.isAtivo(true));
+            conexaoClienteDao.desconectar();
+        }catch(Exception e){
+            System.out.println("Erro na alteração\n");
+        }
     }
     public ArrayList<Cliente> emitirRelatorioClientes(){
         Cliente pessoa;
