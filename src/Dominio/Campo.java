@@ -1,10 +1,15 @@
 package Dominio;
 
 public class Campo {
+
     private int fk_pk_idAluguel;
     private static final int valorHora = 50;
     private boolean ocupado;
     private int capacidade;
+
+    public Campo(){
+
+    }
 
     public Campo(int fk_pk_idAluguel, int valorHora, boolean ocupado, int capacidade){
         this.fk_pk_idAluguel = fk_pk_idAluguel;

@@ -6,6 +6,10 @@ import Dominio.Contato;
 import Dominio.Endereco;
 import Persistencia.ContatoDAO;
 import Persistencia.EnderecoDAO;
+import Persistencia.CampoDAO;
+import Dominio.Campo;
+import Dominio.Aluguel;
+import Persistencia.AluguelDAO;
 
 import java.util.Scanner;
 public class Principal {
@@ -15,10 +19,14 @@ public class Principal {
         ClienteDAO cliDAO = new ClienteDAO();
         EnderecoDAO endDAO = new EnderecoDAO();
         ContatoDAO contDAO = new ContatoDAO();
+        CampoDAO camDAO = new CampoDAO();
+        AluguelDAO aluDAO = new AluguelDAO();
         Scanner teclado = new Scanner(System.in);
         Cliente client;
         Contato cont;
         Endereco local;
+        Campo campo;
+        Aluguel aluguel;
         do {
             System.out.println("--------------------------");
             System.out.println("           MENU           ");
@@ -107,7 +115,19 @@ public class Principal {
                         System.out.println("ATIVO: "+clientes.get(i).getAtivo()+"\n");
                     }
                     break;
-                case 4: break;
+                case 4:
+                    System.out.println("FAZENDO RESERVA\n");
+                    System.out.println("DIGITE O CPF: ");
+                    idaux = teclado.nextInt();
+                    client = cliDAO.buscar(idaux);
+                    campo = camDAO.buscar(idaux);
+                    if(client==null){
+                        System.out.println("O CPF DO CLIENTE É INVÁLIDO\n");
+                    }else{
+                        System.out.println("RESERVA PARA O CLIENTE "+client.getNome()+"\n");
+                        System.out.println("SELECIONE A QUANTIDADE DE HORAS DA RESERVA: ");
+                    }
+                    break;
                 case 5: break;
                 case 6: break;
                 case 7: break;
