@@ -3,9 +3,8 @@ package Dominio;
 import Dominio.Cliente;
 
 public class Aluguel {
-    private int id;
-
     private int fk_cpf;
+    private int id;
     private String data;
     private int qtdHoras;
     private double valorTotal;

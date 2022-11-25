@@ -37,7 +37,7 @@ public class CampoDAO {
     }
 
     //opcional
-    public ArrayList<Campo> emitirRelatorioCampos(){
+    /*public ArrayList<Campo> emitirRelatorioCampos(){
         Campo terreno;
         ArrayList<Campo> lista = new ArrayList<Campo>();
         try {
@@ -53,5 +53,5 @@ public class CampoDAO {
             System.out.println("Erro no relatorio de Campos");
         }
         return lista;
-    }
+    }*/
 }
