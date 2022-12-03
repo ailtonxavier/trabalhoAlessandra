@@ -41,7 +41,7 @@ public class Principal {
             System.out.println("------------------------------------");
             System.out.println("1 - ####### MENU DE CLIENTES #######");
             System.out.println("2 - ####### MENU DE ALUGUEIS #######");
-            System.out.println("3 - ############# SAIR #############");
+            System.out.println("3 - ####### ENCERRAR PROGRAMA ######");
             System.out.print("SELECIONE UMA OPÇÃO: ");
             op = teclado.nextInt();
             teclado.nextLine();
@@ -57,6 +57,7 @@ public class Principal {
                         System.out.println("3 - ##### RELATÓRIO DE CLIENTES ####");
                         System.out.println("4 - ####### ALTERAR CLIENTE ########");
                         System.out.println("5 - ##### EXCLUSAO DE CLIENTE ######");
+                        System.out.println("6 - ### VOLTAR AO MENU PRINCIPAL ###");
                         System.out.print("SELECIONE UMA OPÇÃO: ");
                         op2 = teclado.nextInt();
                         teclado.nextLine();
@@ -157,6 +158,12 @@ public class Principal {
                                     System.out.println("CONTATO NÃO CADASTRADO");
                                 }
                                 break;
+                            case 6:
+                                System.out.println("");
+                                break;
+                            default:
+                                System.out.println("OPÇÃO INVÁLIDA");
+                                break;
                         }
                     } while(op2 != 6);
                     break;
@@ -170,11 +177,15 @@ public class Principal {
                         System.out.println("3 - #### RELATÓRIO DE ALUGUEIS #####");
                         System.out.println("4 - ########### ALTERAR ############");
                         System.out.println("5 - ########### EXCLUSAO ###########");
+                        System.out.println("6 - ### VOLTAR AO MENU PRINCIPAL ###");
                         System.out.print("SELECIONE UMA OPÇÃO: ");
                         op2 = teclado.nextInt();
                         teclado.nextLine();
                         switch (op2){
-
+                            case 1: break;
+                            case 2: break;
+                            case 3: break;
+                            default: break;
                         }
                     }while(op2 != 3);
 
