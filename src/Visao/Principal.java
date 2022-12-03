@@ -174,6 +174,9 @@ public class Principal {
                         System.out.print("SELECIONE UMA OPÇÃO: ");
                         op2 = teclado.nextInt();
                         teclado.nextLine();
+                        switch (op2){
+
+                        }
                     }while(op2 != 3);
 
                     break;
