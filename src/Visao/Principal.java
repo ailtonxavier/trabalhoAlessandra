@@ -34,7 +34,7 @@ public class Principal {
         MENU DE CLIENTES
         MENU DE ALUGUEIS
         MENU DE CAMPO
-        SAIR teste
+        SAIR
         */
         do {
             System.out.println("########## MENU PRINCIPAL ###########");
