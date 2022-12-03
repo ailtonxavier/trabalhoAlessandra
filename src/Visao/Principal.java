@@ -37,12 +37,15 @@ public class Principal {
         SAIR
         */
         do {
-
+            System.out.println("########## MENU PRINCIPAL ###########");
+            System.out.println("1 - ####### MENU DE CLIENTES ########");
+            System.out.println("2 - ####### MENU DE ALUGUEIS ########");
+            System.out.println("3 - ############# SAIR ##############");
             op2 = teclado.nextInt();
         } while (op2 != 4);
         do {
-            System.out.println("############### MENU ###############");
-            System.out.println("1 - ####### INSERIR CLIENTE #######");
+            System.out.println("######### MENU DE CLIENTES ##########");
+            System.out.println("1 - ####### INSERIR CLIENTE ########");
             System.out.println("2 - ############ BUSCAR ############");
             System.out.println("3 - ########## RELATÓRIO ###########");
             System.out.println("4 - ########### ALTERAR ############");
