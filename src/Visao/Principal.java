@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Dominio.*;
 import Persistencia.ClienteDAO;
+import Persistencia.EnderecoDAO;
+import Persistencia.ContatoDAO;
+import Persistencia.AluguelDAO;
+import Persistencia.CampoDAO;
 
 public class Principal {
     public static void main(String[] args) {
@@ -22,6 +26,8 @@ public class Principal {
         int op, op2, i;
         String cpfaux;
         ClienteDAO clienteDAO = new ClienteDAO();
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        ContatoDAO contatoDAO = new ContatoDAO();
         ArrayList<Cliente> clientes = new ArrayList<Cliente>();
         Cliente clienteVisao;
         // fim das variaveis
@@ -152,6 +158,8 @@ public class Principal {
                                 cpfaux = teclado.nextLine();
                                 clienteVisao = clienteDAO.getCliente(cpfaux);
                                 if(clienteVisao != null){
+                                    contatoDAO.excluir(cpfaux);
+                                    enderecoDAO.excluir(cpfaux);
                                     clienteDAO.excluir(cpfaux);
                                     System.out.println("EXCLUSÃO REALIZADA COM SUCESSO");
                                 } else {
