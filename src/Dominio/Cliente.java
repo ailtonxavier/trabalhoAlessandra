@@ -11,7 +11,6 @@ public class Cliente {
     public Cliente(){
 
     }
-
     public Cliente(String pk_cpf, String nome, String login, String senha, boolean ativo){
         this.pk_cpf = pk_cpf;
         this.nome = nome;

@@ -8,7 +8,7 @@ public class Endereco {
     private String rua;
     private String numero; // pode ser sem número, por isso o String
 
-    public Endereco(String pk_fk_cpf, String estado, String login, String senha, boolean ativo){
+    public Endereco(){
 
     }
 

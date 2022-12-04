@@ -28,7 +28,7 @@ public class AluguelDAO {
             Statement instrucao = conexaoAluguelDAO.getConexao().createStatement();
             ResultSet rs = instrucao.executeQuery(relatorio);
             while(rs.next()){
-                aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"),rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
+                aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"), rs.getString("hora"),rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
                 lista.add(aluguel);
             }
             conexaoAluguelDAO.desconectar();
@@ -38,21 +38,22 @@ public class AluguelDAO {
         return lista;
     }
 
-    public Aluguel getAluguel(String pk_fk_cpf){
+    public ArrayList<Aluguel> getAluguel(String pk_fk_cpf){
         Aluguel aluguel = null;
-        try {
+        ArrayList<Aluguel> lista = new ArrayList<Aluguel>();
+        try{
             conexaoAluguelDAO.conectar();
-            PreparedStatement instrucao = conexaoAluguelDAO.getConexao().prepareStatement(buscar);
-            instrucao.setString(1, pk_fk_cpf);
-            ResultSet rs = instrucao.executeQuery();
-            if(rs.next()){
-                aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"),rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
+            Statement instrucao = conexaoAluguelDAO.getConexao().createStatement();
+            ResultSet rs = instrucao.executeQuery(relatorio);
+            while(rs.next()){
+                aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"),rs.getString("hora"),rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
+                lista.add(aluguel);
             }
             conexaoAluguelDAO.desconectar();
-        } catch (Exception e) {
-            System.out.println("Erro na busca: " + e.getMessage());
+        } catch (Exception e){
+            System.out.println("Erro no relatorio" + e.getMessage());
         }
-        return aluguel;
+        return lista;
     }
 
     public void setInserir(Aluguel aluguel){
