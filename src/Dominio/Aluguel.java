@@ -12,10 +12,11 @@ public class Aluguel {
     public Aluguel(){
 
     }
-    public Aluguel(String fk_cpf, int id, String data, int qtdHoras, double valorTotal){
+    public Aluguel(String fk_cpf, int id, String data, String hora,int qtdHoras, double valorTotal){
         this.fk_cpf = fk_cpf;
         this.id = id;
         this.data = data;
+        this.hora = hora;
         this.qtdHoras = qtdHoras;
         this.valorTotal = valorTotal;
     }
