@@ -27,7 +27,7 @@ public class Principal {
         // variaveis
         Scanner teclado = new Scanner(System.in);
         int op, op2, i;
-        int aux1, idaux;
+        int aux1, idaux, idaux2;
         String cpfaux;
         ClienteDAO clienteDAO = new ClienteDAO();
         EnderecoDAO enderecoDAO = new EnderecoDAO();
@@ -105,32 +105,11 @@ public class Principal {
                                     contatoVisao.setEmail(teclado.nextLine());
                                     System.out.println("DIGITE SEU CELULAR: ");
                                     contatoVisao.setCelular(teclado.nextLine());
-                                    System.out.println("DESEJA DEIXAR O TELEFONE FIXO?\n1 - SIM\t2 - NÃO");
-                                    aux1 = teclado.nextInt();
-                                    while(aux1 != 1 && aux1 != 2) {
-                                        System.out.println("DESEJA DEIXAR O TELEFONE FIXO?\n1 - SIM\t2 - NÃO");
-                                        aux1 = teclado.nextInt();
-                                    }
-                                    if(aux1 == 1){
-                                            teclado.nextLine();
-                                            System.out.println("DIGITE SEU TELEFONE FIXO: ");
-                                            contatoVisao.setTelFixo(teclado.nextLine());
-                                            System.out.println("DESEJA DEIXAR O TELEFONE COMERCIAL?\n1 - SIM\t2 - NÃO");
-                                            aux1 = teclado.nextInt();
-                                            while(aux1 != 1 && aux1 != 2){
-                                                System.out.println("DESEJA DEIXAR O TELEFONE COMERCIAL?\n1 - SIM\t2 - NÃO");
-                                                aux1 = teclado.nextInt();
-                                            };
-                                            if(aux1 == 1){
-                                                teclado.nextLine();
-                                                System.out.println("DIGITE SEU TELEFONE COMERCIAL: ");
-                                                contatoVisao.setTelComercial(teclado.nextLine());
-                                            }
-                                        }
-                                        teclado.nextLine();
+                                    System.out.println("DIGITE SEU TELEFONE FIXO: ");
+                                    contatoVisao.setTelFixo(teclado.nextLine());
+                                    System.out.println("DIGITE SEU TELEFONE COMERCIAL: ");
+                                    contatoVisao.setTelComercial(teclado.nextLine());
                                     contatoDAO.setInserir(contatoVisao);
-
-
                                     System.out.println("DIGITE SUA CIDADE: ");
                                     enderecoVisao.setCidade(teclado.nextLine());
                                     System.out.println("DIGITE SEU BAIRRO: ");
@@ -193,6 +172,8 @@ public class Principal {
                                 clienteVisao = clienteDAO.getCliente(cpfaux);
                                 if(clienteVisao != null){
                                     clienteVisao = new Cliente();
+                                    contatoVisao = new Contato();
+                                    enderecoVisao = new Endereco();
                                     clienteVisao.setPk_cpf(cpfaux);
                                     System.out.println("DIGITE O NOVO NOME: ");
                                     clienteVisao.setNome(teclado.nextLine());
@@ -200,6 +181,39 @@ public class Principal {
                                     clienteVisao.setLogin(teclado.nextLine());
                                     System.out.println("DIGITE A NOVA SENHA: ");
                                     clienteVisao.setSenha(teclado.nextLine());
+                                    System.out.println("DESEJA ALTERAR SEU CONTATO:\n");
+                                    System.out.println("1-SIM \t 2-NÃO");
+                                    idaux = teclado.nextInt();
+                                    if(idaux == 1){
+                                        contatoVisao.setPk_fk_cpf(cpfaux);
+                                        System.out.println("DIGITE O NOVO EMAIL: ");
+                                        contatoVisao.setEmail(teclado.nextLine());
+                                        System.out.println("DIGITE SEU NOVO NÚMERO: ");
+                                        contatoVisao.setCelular(teclado.nextLine());
+                                        System.out.println("DIGITE SEU NOVO TELEFONE FIXO: ");
+                                        contatoVisao.setTelFixo(teclado.nextLine());
+                                        System.out.println("DIGITE SEU NOVO TELEFONE COMERCIAL: ");
+                                        contatoVisao.setTelComercial(teclado.nextLine());
+                                    }
+                                    teclado.nextLine();
+                                    System.out.println("DESEJA ALTERAR O ENDEREÇO: \n");
+                                    System.out.println("1- SIM \t 2- NÃO");
+                                    idaux2 = teclado.nextInt();
+                                    if(idaux2 == 1){
+                                        enderecoVisao.setPk_fk_cpf(cpfaux);
+                                        System.out.println("DIGITE SEU ESTADO: ");
+                                        enderecoVisao.setEstado(teclado.nextLine());
+                                        System.out.println("DIGITE SUA CIDADE: ");
+                                        enderecoVisao.setCidade(teclado.nextLine());
+                                        System.out.println("DIGITE SEU BAIRRO: ");
+                                        enderecoVisao.setBairro(teclado.nextLine());
+                                        System.out.println("DIGITE O NOME DA SUA RUA: ");
+                                        enderecoVisao.setRua(teclado.nextLine());
+                                        System.out.println("DIGITE O NÚMERO DA SUA CASA: ");
+                                        enderecoVisao.setNumero(teclado.nextLine());
+                                    }
+                                    enderecoDAO.setAlterar(enderecoVisao);
+                                    contatoDAO.setAlterar(contatoVisao);
                                     clienteVisao.setAtivo(true);
                                     clienteDAO.setAlterar(clienteVisao);
                                     System.out.println("ALTERAÇÃO EFETUADA COM SUCESSO");
