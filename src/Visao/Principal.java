@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Dominio.*;
-import Persistencia.ClienteDAO;
+import Persistencia.*;
 
 public class Principal {
     public static void main(String[] args) {
@@ -19,10 +19,15 @@ public class Principal {
         // variaveis
         Scanner teclado = new Scanner(System.in);
         int op, op2, i;
+        int aux1, aux2,aux3;
         String cpfaux;
         ClienteDAO clienteDAO = new ClienteDAO();
+        ContatoDAO contatoDAO = new ContatoDAO();
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
         ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+        Contato contatoVisao;
         Cliente clienteVisao;
+        Endereco enderecoVisao;
         // fim das variaveis
 
         // CPF/NOME/LOGIN/SENHA/ATIVO
@@ -72,8 +77,10 @@ public class Principal {
                                 clienteVisao = clienteDAO.getCliente(cpfaux);
                                 if(clienteVisao == null){
                                     clienteVisao = new Cliente();
+                                    contatoVisao = new Contato();
+                                    enderecoVisao = new Endereco();
                                     clienteVisao.setPk_cpf(cpfaux); // cpf pego logo acima
-                                    System.out.println("Digite o nome: ");
+                                    System.out.println("DIGITE O NOME: ");
                                     clienteVisao.setNome(teclado.nextLine());
                                     System.out.println("DIGITE O LOGIN: ");
                                     clienteVisao.setLogin(teclado.nextLine());
@@ -81,6 +88,52 @@ public class Principal {
                                     clienteVisao.setSenha(teclado.nextLine());
                                     clienteVisao.setAtivo(true);
                                     clienteDAO.setInserir(clienteVisao);
+
+                                    contatoVisao.setPk_fk_cpf(cpfaux);
+                                    System.out.println("DIGITE SEU EMAIL: ");
+                                    contatoVisao.setEmail(teclado.nextLine());
+                                    System.out.println("DIGITE SEU CELULAR: ");
+                                    contatoVisao.setCelular(teclado.nextLine());
+                                    System.out.println("DESEJA DEIXAR O TELEFONE FIXO?\n1 - SIM\t2 - NÃO");
+                                    aux1 = teclado.nextInt();
+                                    while(aux1 != 1 && aux1 != 2) {
+                                        System.out.println("DESEJA DEIXAR O TELEFONE FIXO?\n1 - SIM\t2 - NÃO");
+                                        aux1 = teclado.nextInt();
+                                    }
+                                    if(aux1 == 1){
+                                            teclado.nextLine();
+                                            System.out.println("DIGITE SEU TELEFONE FIXO: ");
+                                            contatoVisao.setTelFixo(teclado.nextLine());
+                                            System.out.println("DESEJA DEIXAR O TELEFONE COMERCIAL?\n1 - SIM\t2 - NÃO");
+                                            aux1 = teclado.nextInt();
+                                            while(aux1 != 1 && aux1 != 2){
+                                                System.out.println("DESEJA DEIXAR O TELEFONE COMERCIAL?\n1 - SIM\t2 - NÃO");
+                                                aux1 = teclado.nextInt();
+                                            };
+                                            if(aux1 == 1){
+                                                teclado.nextLine();
+                                                System.out.println("DIGITE SEU TELEFONE COMERCIAL: ");
+                                                contatoVisao.setTelComercial(teclado.nextLine());
+                                            }
+                                        }
+                                        teclado.nextLine();
+                                    contatoDAO.setInserir(contatoVisao);
+
+
+                                    System.out.println("DIGITE SUA CIDADE: ");
+                                    enderecoVisao.setCidade(teclado.nextLine());
+                                    System.out.println("DIGITE SEU BAIRRO: ");
+                                    enderecoVisao.setBairro(teclado.nextLine());
+                                    System.out.println("DIGITE SEU ESTADO: ");
+                                    enderecoVisao.setEstado(teclado.nextLine());
+                                    System.out.println("DIGITE O NOME DA RUA: ");
+                                    enderecoVisao.setRua(teclado.nextLine());
+                                    System.out.println("DIGITE O NUMERO DA CASA: ");
+                                    enderecoVisao.setNumero(teclado.nextLine());
+                                    enderecoVisao.setPk_fk_cpf(cpfaux);
+
+                                    enderecoDAO.setInserir(enderecoVisao);
+
                                     System.out.println("CLIENTE INSERIDO COM SUCESSO!");
                                 } else {
                                     System.out.println("Cliente já cadastrado");
