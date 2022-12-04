@@ -24,7 +24,9 @@ public class Principal {
         ClienteDAO clienteDAO = new ClienteDAO();
         ContatoDAO contatoDAO = new ContatoDAO();
         EnderecoDAO enderecoDAO = new EnderecoDAO();
+        AluguelDAO aluguelDAO = new AluguelDAO();
         ArrayList<Cliente> clientes;
+        ArrayList<Aluguel> alugueis;
         Contato contatoVisao;
         Cliente clienteVisao;
         Endereco enderecoVisao;
@@ -243,8 +245,35 @@ public class Principal {
                                     System.out.println("CADASTRE UM CLIENTE PARA ALUGAR UM CAMPO");
                                 }
                                 break;
-                            case 2: break;
-                            case 3: break;
+                            case 2:
+                                // ALTERAR
+                                System.out.println("BUSCANDO ALUGUEL");
+                                System.out.println("DIGITE O CPF DO CONTATO: ");
+                                cpfaux = teclado.nextLine();
+                                clienteVisao = clienteDAO.getCliente(cpfaux);
+                                if(clienteVisao != null){
+                                    System.out.println("CPF: " + clienteVisao.getPk_cpf());
+                                    System.out.println("NOME: " + clienteVisao.getNome());
+                                    System.out.println("LOGIN: " + clienteVisao.getLogin());
+                                    System.out.println("SENHA: " + clienteVisao.getSenha());
+                                    System.out.println("ATIVO: " + clienteVisao.getAtivo());
+                                } else {
+                                    System.out.println("CLIENTE NÃO CADASTRADO!");
+                                }
+
+                                break;
+                            case 3:
+                                alugueis = aluguelDAO.getRelatorio();
+                                for(i = 0; i < alugueis.size(); i++){
+                                    System.out.println("####################################\n");
+                                    System.out.println("CPF: "+ alugueis.get(i).getId());
+                                    System.out.println("NOME: "+ alugueis.get(i).getData());
+                                    System.out.println("LOGIN: "+ alugueis.get(i).getHora());
+                                    System.out.println("SENHA: "+ alugueis.get(i).getValorTotal());
+                                    System.out.println("ATIVO: "+ alugueis.get(i).getFk_cpf());
+                                    System.out.println("####################################\n");
+                                }
+                                break;
                             default: break;
                         }
                     }while(op2 != 3);
