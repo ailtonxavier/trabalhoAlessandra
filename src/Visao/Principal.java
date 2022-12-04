@@ -228,14 +228,21 @@ public class Principal {
                         System.out.println("1 - ######### ALUGAR CAMPO #########");
                         System.out.println("2 - ### BUSCAR ALUGUEL ESPECÍFICO ##");
                         System.out.println("3 - #### RELATÓRIO DE ALUGUEIS #####");
-                        System.out.println("4 - ########### ALTERAR ############");
-                        System.out.println("5 - ########### EXCLUSAO ###########");
-                        System.out.println("6 - ### VOLTAR AO MENU PRINCIPAL ###");
+                        System.out.println("4 - ########### EXCLUSAO ###########");
+                        System.out.println("5 - ### VOLTAR AO MENU PRINCIPAL ###");
                         System.out.print("SELECIONE UMA OPÇÃO: ");
                         op2 = teclado.nextInt();
                         teclado.nextLine();
                         switch (op2){
-                            case 1: break;
+                            case 1:
+                                System.out.println("DIGITE O CPF DO CLIENTE: ");
+                                cpfaux = teclado.nextLine();
+                                if(clienteDAO.getCliente(cpfaux) != null){
+                                    System.out.println("Contato existe");
+                                } else {
+                                    System.out.println("CADASTRE UM CLIENTE PARA ALUGAR UM CAMPO");
+                                }
+                                break;
                             case 2: break;
                             case 3: break;
                             default: break;
@@ -250,10 +257,6 @@ public class Principal {
                     System.out.println("OPÇÃO INVÁLIDA");
             }
         } while (op != 3);
-
-
-
-
 
     }
 }
