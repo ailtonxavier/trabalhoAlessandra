@@ -43,8 +43,9 @@ public class AluguelDAO {
         ArrayList<Aluguel> lista = new ArrayList<Aluguel>();
         try{
             conexaoAluguelDAO.conectar();
-            Statement instrucao = conexaoAluguelDAO.getConexao().createStatement();
-            ResultSet rs = instrucao.executeQuery(buscar);
+            PreparedStatement instrucao = conexaoAluguelDAO.getConexao().prepareStatement(buscar);
+            instrucao.setString(1, pk_fk_cpf);
+            ResultSet rs = instrucao.executeQuery();
             while(rs.next()){
                 aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"), rs.getString("dataDaReserva"),rs.getString("hora"), rs.getString("horaDaReserva"),rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
                 lista.add(aluguel);
