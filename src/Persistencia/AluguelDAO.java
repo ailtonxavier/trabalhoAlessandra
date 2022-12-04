@@ -15,6 +15,7 @@ public class AluguelDAO {
     private String inserir = "insert into aluguel (fk_cpf,data, dataDaReserva, hora, horaDaReserva,qtdHoras,valorTotal) values (?,?,?,?,?,?,?)";
     private String buscar = "select * from aluguel where fk_cpf = ?";
     private String deletar = "delete from aluguel where fk_cpf = ?";
+    private String deletarPorID = "delete from aluguel where id = ?";
 
     public AluguelDAO(){
         conexaoAluguelDAO = new Conexao("jdbc:postgresql://localhost:5432/BDSolo", "postgres", "123");
@@ -81,6 +82,17 @@ public class AluguelDAO {
             conexaoAluguelDAO.conectar();
             PreparedStatement instrucao = conexaoAluguelDAO.getConexao().prepareStatement(deletar);
             instrucao.setString(1, fk_cpf);
+            instrucao.execute();
+            conexaoAluguelDAO.desconectar();
+        } catch (Exception e){
+            System.out.println("Erro na exclusão: " + e.getMessage());
+        }
+    }
+    public void excluir(int id){
+        try {
+            conexaoAluguelDAO.conectar();
+            PreparedStatement instrucao = conexaoAluguelDAO.getConexao().prepareStatement(deletarPorID);
+            instrucao.setInt(1, id);
             instrucao.execute();
             conexaoAluguelDAO.desconectar();
         } catch (Exception e){

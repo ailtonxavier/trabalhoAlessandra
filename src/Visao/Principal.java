@@ -1,5 +1,6 @@
 package Visao;
 
+import java.sql.SQLOutput;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,7 +27,7 @@ public class Principal {
         // variaveis
         Scanner teclado = new Scanner(System.in);
         int op, op2, i;
-        int aux1, aux2,aux3;
+        int aux1, idaux;
         String cpfaux;
         ClienteDAO clienteDAO = new ClienteDAO();
         EnderecoDAO enderecoDAO = new EnderecoDAO();
@@ -241,8 +242,9 @@ public class Principal {
                         System.out.println("1 - ######### ALUGAR CAMPO #########");
                         System.out.println("2 - #### BUSCAR ALUGUEIS POR CPF ###");
                         System.out.println("3 - ##### RELATÓRIO DE ALUGUEIS ####");
-                        System.out.println("4 - ########### EXCLUSAO ###########");
-                        System.out.println("5 - ### VOLTAR AO MENU PRINCIPAL ###");
+                        System.out.println("4 - ###### EXCLUIR UM ALUGUEL ######");
+                        System.out.println("5 - ### EXCLUIR VÁRIOS ALUGUEIS ####");
+                        System.out.println("6 - ### VOLTAR AO MENU PRINCIPAL ###");
                         System.out.print("SELECIONE UMA OPÇÃO: ");
                         op2 = teclado.nextInt();
                         teclado.nextLine();
@@ -319,10 +321,25 @@ public class Principal {
                                     System.out.println("####################################\n");
                                 }
                                 break;
-                            default: break;
+                            case 4:
+                                /*#######################################
+                                ############ DELETAR ALUGUEL ############
+                                #######################################*/
+                                System.out.println("DIGITE O ID DO ALUGUEL\nQUE DESEJA EXCLUIR: ");
+                                idaux = teclado.nextInt();
+                                aluguelDAO.excluir(idaux);
+                                System.out.println("ALUGUEL EXCLUIDO COM SUCESSO!");
+                                break;
+                            case 5:
+                                System.out.println("DIGITE O CPF DE QUEM DESEJA EXCLUIR: ");
+                                cpfaux = teclado.nextLine();
+                                aluguelDAO.excluir(cpfaux);
+                                System.out.println("ALUGUEL EXCLUIDO COM SUCESSO!");
+                                break;
+                            default:
+                                System.out.println("VOCÊ É BURRO?"); break;
                         }
-                    }while(op2 != 4);
-
+                    }while(op2 != 6);
                     break;
                 case 3:
                     System.out.println("PROGRAMA ENCERRADO...");
