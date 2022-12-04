@@ -6,17 +6,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Dominio.*;
-<<<<<<< HEAD
 import Persistencia.ClienteDAO;
 import Persistencia.EnderecoDAO;
 import Persistencia.ContatoDAO;
 import Persistencia.AluguelDAO;
 import Persistencia.CampoDAO;
 //imports
-=======
+
 import Persistencia.*;
 
->>>>>>> ca78836e6fe4a0315dd3cff3dd41e434a49e82a1
 public class Principal {
     public static void main(String[] args) {
 
@@ -31,18 +29,12 @@ public class Principal {
         int aux1, aux2,aux3;
         String cpfaux;
         ClienteDAO clienteDAO = new ClienteDAO();
-<<<<<<< HEAD
         EnderecoDAO enderecoDAO = new EnderecoDAO();
         ContatoDAO contatoDAO = new ContatoDAO();
-        ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-=======
-        ContatoDAO contatoDAO = new ContatoDAO();
-        EnderecoDAO enderecoDAO = new EnderecoDAO();
         AluguelDAO aluguelDAO = new AluguelDAO();
         ArrayList<Cliente> clientes;
         ArrayList<Aluguel> alugueis;
         Contato contatoVisao;
->>>>>>> ca78836e6fe4a0315dd3cff3dd41e434a49e82a1
         Cliente clienteVisao;
         Endereco enderecoVisao;
         // fim das variaveis
