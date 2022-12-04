@@ -218,6 +218,7 @@ public class Principal {
                                 cpfaux = teclado.nextLine();
                                 clienteVisao = clienteDAO.getCliente(cpfaux);
                                 if(clienteVisao != null){
+                                    aluguelDAO.excluir(cpfaux);
                                     contatoDAO.excluir(cpfaux);
                                     enderecoDAO.excluir(cpfaux);
                                     clienteDAO.excluir(cpfaux);

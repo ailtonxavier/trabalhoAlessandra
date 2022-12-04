@@ -14,6 +14,7 @@ public class AluguelDAO {
     private String relatorio = "select * from aluguel";
     private String inserir = "insert into aluguel (pk_fk_cpf,id,data,qtdHoras,valorTotal) values (?,?,?,?,?)";
     private String buscar = "select * from aluguel where fk_cpf = ?";
+    private String buscarID = "select id from aluguel where fk_cpf = ?";
     private String deletar = "delete from aluguel where fk_cpf = ?";
 
     public AluguelDAO(){
