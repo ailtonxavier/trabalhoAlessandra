@@ -24,7 +24,7 @@ public class Principal {
         ClienteDAO clienteDAO = new ClienteDAO();
         ContatoDAO contatoDAO = new ContatoDAO();
         EnderecoDAO enderecoDAO = new EnderecoDAO();
-        ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+        ArrayList<Cliente> clientes;
         Contato contatoVisao;
         Cliente clienteVisao;
         Endereco enderecoVisao;
