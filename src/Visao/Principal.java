@@ -283,11 +283,11 @@ public class Principal {
                                 clienteVisao = clienteDAO.getCliente(cpfaux);
                                 if(clienteVisao != null){
                                     alugueis = aluguelDAO.getAluguel(cpfaux);
-
-                                    alugueis = aluguelDAO.getAluguel(cpfaux);
                                     for(i = 0; i < alugueis.size(); i++){
+                                        clienteVisao = clienteDAO.getCliente(cpfaux);
                                         System.out.println("####################################");
                                         System.out.println("ID: "+ alugueis.get(i).getId());
+                                        System.out.println("NOME: "+ clienteVisao.getNome());
                                         System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
                                         System.out.println("DATA: "+ alugueis.get(i).getData());
                                         System.out.println("DATA DO RESERVA: " + alugueis.get(i).getDataDaReserva());
@@ -305,8 +305,10 @@ public class Principal {
                             case 3:
                                 alugueis = aluguelDAO.getRelatorio();
                                 for(i = 0; i < alugueis.size(); i++){
+                                    clienteVisao = clienteDAO.getCliente(alugueis.get(i).getFk_cpf());
                                     System.out.println("####################################\n");
                                     System.out.println("ID: "+ alugueis.get(i).getId());
+                                    System.out.println("NOME: "+ clienteVisao.getNome());
                                     System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
                                     System.out.println("DATA: "+ alugueis.get(i).getData());
                                     System.out.println("DATA DA RESERVA: "+ alugueis.get(i).getDataDaReserva());
@@ -319,7 +321,7 @@ public class Principal {
                                 break;
                             default: break;
                         }
-                    }while(op2 != 3);
+                    }while(op2 != 4);
 
                     break;
                 case 3:

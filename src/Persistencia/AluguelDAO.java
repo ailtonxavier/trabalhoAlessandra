@@ -12,7 +12,7 @@ public class AluguelDAO {
     private Conexao conexaoAluguelDAO;
 
     private String relatorio = "select * from aluguel";
-    private String inserir = "insert into aluguel (fk_cpf,id,data, dataDaReserva, hora, horaDaReserva,qtdHoras,valorTotal) values (?,?,?,?,?,?,?,?)";
+    private String inserir = "insert into aluguel (fk_cpf,data, dataDaReserva, hora, horaDaReserva,qtdHoras,valorTotal) values (?,?,?,?,?,?,?)";
     private String buscar = "select * from aluguel where fk_cpf = ?";
     private String deletar = "delete from aluguel where fk_cpf = ?";
 
@@ -62,13 +62,12 @@ public class AluguelDAO {
             conexaoAluguelDAO.conectar();
             PreparedStatement instrucao = conexaoAluguelDAO.getConexao().prepareStatement(inserir);
             instrucao.setString(1, aluguel.getFk_cpf());
-            instrucao.setInt(2, aluguel.getId());
-            instrucao.setString(3, aluguel.getData());
-            instrucao.setString(4, aluguel.getDataDaReserva());
-            instrucao.setString(5, aluguel.getHora());
-            instrucao.setString(6, aluguel.getHoraDaReserva());
-            instrucao.setInt(7, aluguel.getQtdHoras());
-            instrucao.setDouble(8, aluguel.getValorTotal());
+            instrucao.setString(2, aluguel.getData());
+            instrucao.setString(3, aluguel.getDataDaReserva());
+            instrucao.setString(4, aluguel.getHora());
+            instrucao.setString(5, aluguel.getHoraDaReserva());
+            instrucao.setInt(6, aluguel.getQtdHoras());
+            instrucao.setDouble(7, aluguel.getValorTotal());
             instrucao.execute();
             conexaoAluguelDAO.desconectar();
         } catch (Exception e){
