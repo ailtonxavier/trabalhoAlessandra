@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Dominio.*;
-
 import Persistencia.ClienteDAO;
 import Persistencia.EnderecoDAO;
 import Persistencia.ContatoDAO;
@@ -15,7 +14,6 @@ import Persistencia.CampoDAO;
 //imports
 
 import Persistencia.*;
-
 
 public class Principal {
     public static void main(String[] args) {
@@ -31,8 +29,8 @@ public class Principal {
         int aux1, aux2,aux3;
         String cpfaux;
         ClienteDAO clienteDAO = new ClienteDAO();
-        ContatoDAO contatoDAO = new ContatoDAO();
         EnderecoDAO enderecoDAO = new EnderecoDAO();
+        ContatoDAO contatoDAO = new ContatoDAO();
         AluguelDAO aluguelDAO = new AluguelDAO();
         ArrayList<Cliente> clientes;
         ArrayList<Aluguel> alugueis;
@@ -216,6 +214,7 @@ public class Principal {
                                 cpfaux = teclado.nextLine();
                                 clienteVisao = clienteDAO.getCliente(cpfaux);
                                 if(clienteVisao != null){
+                                    aluguelDAO.excluir(cpfaux);
                                     contatoDAO.excluir(cpfaux);
                                     enderecoDAO.excluir(cpfaux);
                                     clienteDAO.excluir(cpfaux);
