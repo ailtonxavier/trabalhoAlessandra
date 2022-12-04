@@ -12,7 +12,7 @@ public class AluguelDAO {
     private Conexao conexaoAluguelDAO;
 
     private String relatorio = "select * from aluguel";
-    private String inserir = "insert into aluguel (pk_fk_cpf,id,data,qtdHoras,valorTotal) values (?,?,?,?,?)";
+    private String inserir = "insert into aluguel (fk_cpf,id,data, dataDaReserva, hora, horaDaReserva,qtdHoras,valorTotal) values (?,?,?,?,?,?,?,?)";
     private String buscar = "select * from aluguel where fk_cpf = ?";
     private String deletar = "delete from aluguel where fk_cpf = ?";
 
@@ -28,7 +28,7 @@ public class AluguelDAO {
             Statement instrucao = conexaoAluguelDAO.getConexao().createStatement();
             ResultSet rs = instrucao.executeQuery(relatorio);
             while(rs.next()){
-                aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"), rs.getString("hora"),rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
+                aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"), rs.getString("dataDaReserva"), rs.getString("hora"), rs.getString("horaDaReserva"), rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
                 lista.add(aluguel);
             }
             conexaoAluguelDAO.desconectar();
@@ -44,9 +44,9 @@ public class AluguelDAO {
         try{
             conexaoAluguelDAO.conectar();
             Statement instrucao = conexaoAluguelDAO.getConexao().createStatement();
-            ResultSet rs = instrucao.executeQuery(relatorio);
+            ResultSet rs = instrucao.executeQuery(buscar);
             while(rs.next()){
-                aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"),rs.getString("hora"),rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
+                aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"), rs.getString("dataDaReserva"),rs.getString("hora"), rs.getString("horaDaReserva"),rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
                 lista.add(aluguel);
             }
             conexaoAluguelDAO.desconectar();
@@ -63,8 +63,11 @@ public class AluguelDAO {
             instrucao.setString(1, aluguel.getFk_cpf());
             instrucao.setInt(2, aluguel.getId());
             instrucao.setString(3, aluguel.getData());
-            instrucao.setInt(4, aluguel.getQtdHoras());
-            instrucao.setDouble(5, aluguel.getValorTotal());
+            instrucao.setString(4, aluguel.getDataDaReserva());
+            instrucao.setString(5, aluguel.getHora());
+            instrucao.setString(6, aluguel.getHoraDaReserva());
+            instrucao.setInt(7, aluguel.getQtdHoras());
+            instrucao.setDouble(8, aluguel.getValorTotal());
             instrucao.execute();
             conexaoAluguelDAO.desconectar();
         } catch (Exception e){

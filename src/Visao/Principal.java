@@ -1,5 +1,6 @@
 package Visao;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +11,6 @@ import Persistencia.ClienteDAO;
 import Persistencia.EnderecoDAO;
 import Persistencia.ContatoDAO;
 import Persistencia.AluguelDAO;
-import Persistencia.CampoDAO;
 //imports
 
 import Persistencia.*;
@@ -18,10 +18,10 @@ import Persistencia.*;
 public class Principal {
     public static void main(String[] args) {
 
-//        String data = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//        String hora   = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-//        System.out.println(hora);
-//        System.out.println(data);
+        String data = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        System.out.println(hora);
+        System.out.println(data);
 
         // variaveis
         Scanner teclado = new Scanner(System.in);
@@ -37,6 +37,7 @@ public class Principal {
         Contato contatoVisao;
         Cliente clienteVisao;
         Endereco enderecoVisao;
+        Aluguel aluguelVisao;
         // fim das variaveis
 
         // CPF/NOME/LOGIN/SENHA/ATIVO
@@ -253,7 +254,19 @@ public class Principal {
                                 System.out.println("DIGITE O CPF DO CLIENTE: ");
                                 cpfaux = teclado.nextLine();
                                 if(clienteDAO.getCliente(cpfaux) != null){
-                                    System.out.println("Contato existe");
+                                    aluguelVisao = new Aluguel();
+                                    aluguelVisao.setFk_cpf(cpfaux);
+                                    aluguelVisao.setDataDaReserva(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                                    aluguelVisao.setHoraDaReserva(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                                    System.out.print("DIGITE A DATA DA RESERVA\nDD/MM/AAAA: ");
+                                    aluguelVisao.setData(teclado.nextLine());
+                                    System.out.print("DIGITE A HORA DA RESERVA: ");
+                                    aluguelVisao.setHora(teclado.nextLine());
+                                    System.out.print("DIGITE A QUANTIDADE DE HORAS DA RESERVA: ");
+                                    aluguelVisao.setQtdHoras(teclado.nextInt());
+                                    aluguelVisao.setValorTotal(aluguelVisao.getQtdHoras() * 50);
+                                    aluguelDAO.setInserir(aluguelVisao);
+                                    teclado.nextLine();
                                 } else {
                                     System.out.println("CADASTRE UM CLIENTE PARA ALUGAR UM CAMPO");
                                 }
@@ -270,12 +283,17 @@ public class Principal {
                                 clienteVisao = clienteDAO.getCliente(cpfaux);
                                 if(clienteVisao != null){
                                     alugueis = aluguelDAO.getAluguel(cpfaux);
+
+                                    alugueis = aluguelDAO.getAluguel(cpfaux);
                                     for(i = 0; i < alugueis.size(); i++){
                                         System.out.println("####################################");
-                                        System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
                                         System.out.println("ID: "+ alugueis.get(i).getId());
+                                        System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
                                         System.out.println("DATA: "+ alugueis.get(i).getData());
+                                        System.out.println("DATA DO RESERVA: " + alugueis.get(i).getDataDaReserva());
                                         System.out.println("HORA: "+ alugueis.get(i).getHora());
+                                        System.out.println("HORA DA RESERVA: "+ alugueis.get(i).getHoraDaReserva());
+                                        System.out.println("QUANTIDADE DE HORAS RESERVADAS: "+alugueis.get(i).getQtdHoras());
                                         System.out.println("VALOR TOTAL: "+ alugueis.get(i).getValorTotal());
                                         System.out.println("####################################\n");
                                     }
@@ -288,11 +306,14 @@ public class Principal {
                                 alugueis = aluguelDAO.getRelatorio();
                                 for(i = 0; i < alugueis.size(); i++){
                                     System.out.println("####################################\n");
-                                    System.out.println("CPF: "+ alugueis.get(i).getId());
-                                    System.out.println("NOME: "+ alugueis.get(i).getData());
-                                    System.out.println("LOGIN: "+ alugueis.get(i).getHora());
-                                    System.out.println("SENHA: "+ alugueis.get(i).getValorTotal());
-                                    System.out.println("ATIVO: "+ alugueis.get(i).getFk_cpf());
+                                    System.out.println("ID: "+ alugueis.get(i).getId());
+                                    System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
+                                    System.out.println("DATA: "+ alugueis.get(i).getData());
+                                    System.out.println("DATA DA RESERVA: "+ alugueis.get(i).getDataDaReserva());
+                                    System.out.println("HORA: "+ alugueis.get(i).getHora());
+                                    System.out.println("HORA DA RESERVA: "+ alugueis.get(i).getHoraDaReserva());
+                                    System.out.println("QUANTIDADE DE HORAS RESERVADAS: "+alugueis.get(i).getQtdHoras());
+                                    System.out.println("VALOR TOTAL: "+ alugueis.get(i).getValorTotal());
                                     System.out.println("####################################\n");
                                 }
                                 break;
