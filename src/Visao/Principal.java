@@ -228,15 +228,18 @@ public class Principal {
                         System.out.println("---------- MENU DE ALUGUEIS --------");
                         System.out.println("------------------------------------");
                         System.out.println("1 - ######### ALUGAR CAMPO #########");
-                        System.out.println("2 - ### BUSCAR ALUGUEL ESPECÍFICO ##");
-                        System.out.println("3 - #### RELATÓRIO DE ALUGUEIS #####");
+                        System.out.println("2 - #### BUSCAR ALUGUEIS POR CPF ###");
+                        System.out.println("3 - ##### RELATÓRIO DE ALUGUEIS ####");
                         System.out.println("4 - ########### EXCLUSAO ###########");
                         System.out.println("5 - ### VOLTAR AO MENU PRINCIPAL ###");
                         System.out.print("SELECIONE UMA OPÇÃO: ");
                         op2 = teclado.nextInt();
                         teclado.nextLine();
-                        switch (op2){
+                        switch(op2){
                             case 1:
+                                /*#######################################
+                                ############ ALUGUEL DE CAMPO ###########
+                                #######################################*/
                                 System.out.println("DIGITE O CPF DO CLIENTE: ");
                                 cpfaux = teclado.nextLine();
                                 if(clienteDAO.getCliente(cpfaux) != null){
@@ -246,17 +249,26 @@ public class Principal {
                                 }
                                 break;
                             case 2:
+                                /*#######################################
+                                ############ BUSCAR ALUGUEL #############
+                                #######################################*/
                                 // ALTERAR
+
                                 System.out.println("BUSCANDO ALUGUEL");
                                 System.out.println("DIGITE O CPF DO CONTATO: ");
                                 cpfaux = teclado.nextLine();
                                 clienteVisao = clienteDAO.getCliente(cpfaux);
                                 if(clienteVisao != null){
-                                    System.out.println("CPF: " + clienteVisao.getPk_cpf());
-                                    System.out.println("NOME: " + clienteVisao.getNome());
-                                    System.out.println("LOGIN: " + clienteVisao.getLogin());
-                                    System.out.println("SENHA: " + clienteVisao.getSenha());
-                                    System.out.println("ATIVO: " + clienteVisao.getAtivo());
+                                    alugueis = aluguelDAO.getAluguel(cpfaux);
+                                    for(i = 0; i < alugueis.size(); i++){
+                                        System.out.println("####################################");
+                                        System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
+                                        System.out.println("ID: "+ alugueis.get(i).getId());
+                                        System.out.println("DATA: "+ alugueis.get(i).getData());
+                                        System.out.println("HORA: "+ alugueis.get(i).getHora());
+                                        System.out.println("VALOR TOTAL: "+ alugueis.get(i).getValorTotal());
+                                        System.out.println("####################################\n");
+                                    }
                                 } else {
                                     System.out.println("CLIENTE NÃO CADASTRADO!");
                                 }
