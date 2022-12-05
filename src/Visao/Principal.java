@@ -268,15 +268,11 @@ public class Principal {
                                 /*#######################################
                                 ############ ALUGUEL DE CAMPO ###########
                                 #######################################*/
-                                op3 = 1;
-                                do {
                                     System.out.println("DIGITE O CPF DO CLIENTE: ");
                                     cpfaux = teclado.nextLine();
 
 
-
-                                    if(clienteDAO.getCliente(cpfaux) != null){
-
+                                    if (clienteDAO.getCliente(cpfaux) != null) {
 
 
                                         aluguelVisao = new Aluguel();
@@ -292,13 +288,18 @@ public class Principal {
                                         aluguelVisao.setQtdHoras(teclado.nextInt());
                                         aluguelVisao.setValorTotal(aluguelVisao.getQtdHoras() * 50);
                                         aluguelDAO.setInserir(aluguelVisao);
-                                        System.out.println("DESEJA ALUGAR COM MAIS UMA PESSOA?\n1 - NÃO\t 2 - SIM");
-                                        op3 = teclado.nextInt();
-
+                                        do {
+                                            System.out.println("DESEJA ALUGAR COM MAIS UMA PESSOA?\n1 - NÃO\t 2 - SIM");
+                                            op3 = teclado.nextInt();
+                                            if (op3 != 1) {
+                                                aluguelVisao.setFk_cpf(cpfaux);
+                                                aluguelDAO.setInserir(aluguelVisao);
+                                            }
+                                        }while(op3 == 2);
                                     } else {
                                         System.out.println("CADASTRE UM CLIENTE PARA ALUGAR UM CAMPO");
                                     }
-                                } while(op3 != 2);
+
 
                                 break;
                             case 2:
