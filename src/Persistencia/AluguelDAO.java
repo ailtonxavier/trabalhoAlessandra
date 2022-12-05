@@ -27,7 +27,7 @@ public class AluguelDAO {
         try{
             conexaoAluguelDAO.conectar();
             Statement instrucao = conexaoAluguelDAO.getConexao().createStatement();
-            ResultSet rs = instrucao.executeQuery(buscar);
+            ResultSet rs = instrucao.executeQuery(relatorio);
             while(rs.next()){
                 aluguel = new Aluguel(rs.getString("fk_cpf"),rs.getInt("id"),rs.getString("data"), rs.getString("dataDaReserva"), rs.getString("hora"), rs.getString("horaDaReserva"), rs.getInt("qtdHoras"),rs.getDouble("valorTotal"));
                 lista.add(aluguel);

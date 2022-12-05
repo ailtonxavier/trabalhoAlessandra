@@ -26,7 +26,7 @@ public class Principal {
 
         // variaveis
         Scanner teclado = new Scanner(System.in);
-        int op, op2, i;
+        int op, op2, op3, i;
         int aux1, idaux, idaux2;
         String cpfaux;
         ClienteDAO clienteDAO = new ClienteDAO();
@@ -39,6 +39,7 @@ public class Principal {
         Cliente clienteVisao;
         Endereco enderecoVisao;
         Aluguel aluguelVisao;
+        Aluguel arrayListAlugueis;
         // fim das variaveis
 
         // CPF/NOME/LOGIN/SENHA/ATIVO
@@ -267,25 +268,38 @@ public class Principal {
                                 /*#######################################
                                 ############ ALUGUEL DE CAMPO ###########
                                 #######################################*/
-                                System.out.println("DIGITE O CPF DO CLIENTE: ");
-                                cpfaux = teclado.nextLine();
-                                if(clienteDAO.getCliente(cpfaux) != null){
-                                    aluguelVisao = new Aluguel();
-                                    aluguelVisao.setFk_cpf(cpfaux);
-                                    aluguelVisao.setDataDaReserva(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                                    aluguelVisao.setHoraDaReserva(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-                                    System.out.print("DIGITE A DATA DA RESERVA\nDD/MM/AAAA: ");
-                                    aluguelVisao.setData(teclado.nextLine());
-                                    System.out.print("DIGITE A HORA DA RESERVA: ");
-                                    aluguelVisao.setHora(teclado.nextLine());
-                                    System.out.print("DIGITE A QUANTIDADE DE HORAS DA RESERVA: ");
-                                    aluguelVisao.setQtdHoras(teclado.nextInt());
-                                    aluguelVisao.setValorTotal(aluguelVisao.getQtdHoras() * 50);
-                                    aluguelDAO.setInserir(aluguelVisao);
-                                    teclado.nextLine();
-                                } else {
-                                    System.out.println("CADASTRE UM CLIENTE PARA ALUGAR UM CAMPO");
-                                }
+                                op3 = 1;
+                                do {
+                                    System.out.println("DIGITE O CPF DO CLIENTE: ");
+                                    cpfaux = teclado.nextLine();
+
+
+
+                                    if(clienteDAO.getCliente(cpfaux) != null){
+
+
+
+                                        aluguelVisao = new Aluguel();
+
+                                        aluguelVisao.setFk_cpf(cpfaux);
+                                        aluguelVisao.setDataDaReserva(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                                        aluguelVisao.setHoraDaReserva(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                                        System.out.print("DIGITE A DATA DA RESERVA\nDD/MM/AAAA: ");
+                                        aluguelVisao.setData(teclado.nextLine());
+                                        System.out.print("DIGITE A HORA DA RESERVA: ");
+                                        aluguelVisao.setHora(teclado.nextLine());
+                                        System.out.print("DIGITE A QUANTIDADE DE HORAS DA RESERVA: ");
+                                        aluguelVisao.setQtdHoras(teclado.nextInt());
+                                        aluguelVisao.setValorTotal(aluguelVisao.getQtdHoras() * 50);
+                                        aluguelDAO.setInserir(aluguelVisao);
+                                        System.out.println("DESEJA ALUGAR COM MAIS UMA PESSOA?\n1 - NÃO\t 2 - SIM");
+                                        op3 = teclado.nextInt();
+
+                                    } else {
+                                        System.out.println("CADASTRE UM CLIENTE PARA ALUGAR UM CAMPO");
+                                    }
+                                } while(op3 != 2);
+
                                 break;
                             case 2:
                                 /*#######################################
