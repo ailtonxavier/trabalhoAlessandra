@@ -1,7 +1,5 @@
 package Dominio;
 
-import java.util.ArrayList;
-
 public class Aluguel {
     private String fk_cpf;
     private int id;
