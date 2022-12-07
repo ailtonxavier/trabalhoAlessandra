@@ -25,8 +25,8 @@ public class Principal {
         // variaveis
         Scanner teclado = new Scanner(System.in);
         int op, op2, op3, i;
-        int aux1, idaux, idaux2;
-        String cpfaux;
+        int aux1, idaux, idaux2, auxQtdHoras, auxValorTotal;
+        String cpfaux, auxDataLocal, auxHoraLocal, auxData, auxHoraReserva;
         ClienteDAO clienteDAO = new ClienteDAO();
         EnderecoDAO enderecoDAO = new EnderecoDAO();
         ContatoDAO contatoDAO = new ContatoDAO();
@@ -273,26 +273,44 @@ public class Principal {
                                     System.out.println("DIGITE O CPF DO CLIENTE: ");
                                     cpfaux = teclado.nextLine();
                                     if (clienteDAO.getCliente(cpfaux) != null) {
-                                        aluguelVisao = new Aluguel();
-                                        aluguelVisao.setFk_cpf(cpfaux);
-                                        aluguelVisao.setDataDaReserva(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                                        aluguelVisao.setHoraDaReserva(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                                        auxDataLocal = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                                        auxHoraLocal = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
                                         System.out.print("DIGITE A DATA DA RESERVA\nDD/MM/AAAA: ");
-                                        aluguelVisao.setData(teclado.nextLine());
+                                        auxData = teclado.nextLine();
                                         System.out.print("DIGITE A HORA DA RESERVA: ");
-                                        aluguelVisao.setHora(teclado.nextLine());
+                                        auxHoraReserva = teclado.nextLine();
                                         System.out.print("DIGITE A QUANTIDADE DE HORAS DA RESERVA: ");
-                                        aluguelVisao.setQtdHoras(teclado.nextInt());
-                                        aluguelVisao.setValorTotal(aluguelVisao.getQtdHoras() * 50);
+                                        auxQtdHoras = teclado.nextInt();
+                                        aluguelVisao = new Aluguel();
+                                        auxValorTotal = aluguelVisao.getQtdHoras() * 50;
+                                        aluguelVisao.setValorTotal(auxValorTotal);
+                                        aluguelVisao.setFk_cpf(cpfaux);
+                                        aluguelVisao.setQtdHoras(auxQtdHoras);
+                                        aluguelVisao.setDataDaReserva(auxDataLocal);
+                                        aluguelVisao.setHoraDaReserva(auxHoraLocal);
+                                        aluguelVisao.setData(auxData);
+                                        aluguelVisao.setHora(auxHoraReserva);
                                         aluguelDAO.setInserir(aluguelVisao);
                                         do {
                                             System.out.println("DESEJA ALUGAR COM MAIS UMA PESSOA?\n1 - NÃO\t 2 - SIM");
                                             op3 = teclado.nextInt();
+                                            teclado.nextLine();
                                             if (op3 != 1) {
                                                 System.out.println("DIGITE O CPF: ");
                                                 cpfaux = teclado.nextLine();
+                                                aluguelVisao = new Aluguel();
                                                 aluguelVisao.setFk_cpf(cpfaux);
+                                                auxValorTotal = aluguelVisao.getQtdHoras() * 50;
+                                                aluguelVisao.setValorTotal(auxValorTotal);
+                                                aluguelVisao.setFk_cpf(cpfaux);
+                                                aluguelVisao.setQtdHoras(auxQtdHoras);
+                                                aluguelVisao.setDataDaReserva(auxDataLocal);
+                                                aluguelVisao.setHoraDaReserva(auxHoraLocal);
+                                                aluguelVisao.setData(auxData);
+                                                aluguelVisao.setHora(auxHoraReserva);
                                                 aluguelDAO.setInserir(aluguelVisao);
+                                            } else {
+                                                System.out.println("VOLTANDO AO MENU ANTERIOR!");
                                             }
                                         }while(op3 == 2);
                                     } else {
