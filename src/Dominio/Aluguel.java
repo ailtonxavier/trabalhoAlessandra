@@ -11,7 +11,6 @@ public class Aluguel {
     private String horaDaReserva;
     private int qtdHoras;
     private double valorTotal;
-    private ArrayList<Cliente> clientes;
 
     public Aluguel(){
 
@@ -38,7 +37,6 @@ public class Aluguel {
     public String getHoraDaReserva(){return horaDaReserva;}
     public int getQtdHoras() {return qtdHoras;}
     public double getValorTotal() {return valorTotal;}
-    public ArrayList<Cliente> getClientes(){return clientes;}
 
     //Setters
     public void setFk_cpf(String fk_cpf) {this.fk_cpf = fk_cpf;}
@@ -53,5 +51,4 @@ public class Aluguel {
 
     public void setQtdHoras(int qtdHoras) {this.qtdHoras = qtdHoras;}
     public void setValorTotal(double valorTotal) {this.valorTotal = valorTotal;}
-    public void setClientes(ArrayList<Cliente> clientes){this.clientes = clientes;}
 }

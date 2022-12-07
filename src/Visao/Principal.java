@@ -1,7 +1,5 @@
 package Visao;
 
-import java.sql.SQLOutput;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -268,6 +266,10 @@ public class Principal {
                                 /*#######################################
                                 ############ ALUGUEL DE CAMPO ###########
                                 #######################################*/
+                                /*
+                                dataaux = A
+                                data
+                                * */
                                     System.out.println("DIGITE O CPF DO CLIENTE: ");
                                     cpfaux = teclado.nextLine();
                                     if (clienteDAO.getCliente(cpfaux) != null) {
@@ -304,31 +306,30 @@ public class Principal {
                                 ############ BUSCAR ALUGUEL #############
                                 #######################################*/
                                 // ALTERAR
-
-                                System.out.println("BUSCANDO ALUGUEL");
-                                System.out.println("DIGITE O CPF DO CONTATO: ");
+                                Cliente cliente;
+                                System.out.println("Digite o CPF do cliente desejado: ");
                                 cpfaux = teclado.nextLine();
-                                clienteVisao = clienteDAO.getCliente(cpfaux);
-                                if(clienteVisao != null){
-                                    alugueis = aluguelDAO.getAluguel(cpfaux);
-                                    for(i = 0; i < alugueis.size(); i++){
-                                        clienteVisao = clienteDAO.getCliente(cpfaux);
-                                        System.out.println("####################################");
-                                        System.out.println("ID: "+ alugueis.get(i).getId());
-                                        System.out.println("NOME: "+ clienteVisao.getNome());
-                                        System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
-                                        System.out.println("DATA: "+ alugueis.get(i).getData());
-                                        System.out.println("DATA DO RESERVA: " + alugueis.get(i).getDataDaReserva());
-                                        System.out.println("HORA: "+ alugueis.get(i).getHora());
-                                        System.out.println("HORA DA RESERVA: "+ alugueis.get(i).getHoraDaReserva());
-                                        System.out.println("QUANTIDADE DE HORAS RESERVADAS: "+alugueis.get(i).getQtdHoras());
-                                        System.out.println("VALOR TOTAL: "+ alugueis.get(i).getValorTotal());
-                                        System.out.println("####################################\n");
-                                    }
-                                } else {
-                                    System.out.println("CLIENTE NÃO CADASTRADO!");
-                                }
 
+                                cliente = clienteDAO.getCliente(cpfaux);
+                                if(cliente==null)
+                                    System.out.println("Cliente não cadastrado!");
+                                else {
+                                    System.out.println("Cliente localizado!");
+                                    System.out.println("Nome: " + cliente.getNome());
+                                    cliente.setAluguels(aluguelDAO.getAluguel(cliente.getPk_cpf()));
+                                    System.out.println("Relat?rio de dependentes...");
+                                    for (i = 0; i < cliente.getTamanhoLista(); i++) {
+                                        System.out.println("-----------------------------");
+                                        System.out.println("CPF DO CLIENTE: " + cliente.getAluguels().get(i).getFk_cpf());
+                                        System.out.println("ID: " + cliente.getAluguels().get(i).getId());
+                                        System.out.println("DATA: " + cliente.getAluguels().get(i).getData());
+                                        System.out.println("DATA DA RESERVA: " + cliente.getAluguels().get(i).getDataDaReserva());
+                                        System.out.println("HORA: " + cliente.getAluguels().get(i).getHora());
+                                        System.out.println("QUANTIDADE DE HORAS: " + cliente.getAluguels().get(i).getQtdHoras());
+                                        System.out.println("HORA DA RESERVAS: " + cliente.getAluguels().get(i).getHoraDaReserva());
+                                        System.out.println("VALOR TOTAL: " + cliente.getAluguels().get(i).getValorTotal());
+                                    }
+                                }
                                 break;
                             case 3:
                                 alugueis = aluguelDAO.getRelatorio();
