@@ -270,13 +270,8 @@ public class Principal {
                                 #######################################*/
                                     System.out.println("DIGITE O CPF DO CLIENTE: ");
                                     cpfaux = teclado.nextLine();
-
-
                                     if (clienteDAO.getCliente(cpfaux) != null) {
-
-
                                         aluguelVisao = new Aluguel();
-
                                         aluguelVisao.setFk_cpf(cpfaux);
                                         aluguelVisao.setDataDaReserva(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                                         aluguelVisao.setHoraDaReserva(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
@@ -292,6 +287,8 @@ public class Principal {
                                             System.out.println("DESEJA ALUGAR COM MAIS UMA PESSOA?\n1 - NÃO\t 2 - SIM");
                                             op3 = teclado.nextInt();
                                             if (op3 != 1) {
+                                                System.out.println("DIGITE O CPF: ");
+                                                cpfaux = teclado.nextLine();
                                                 aluguelVisao.setFk_cpf(cpfaux);
                                                 aluguelDAO.setInserir(aluguelVisao);
                                             }
