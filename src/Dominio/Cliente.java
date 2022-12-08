@@ -58,13 +58,6 @@ public class Cliente {
     public void setLogin(String login){this.login = login;}
     public void setSenha(String senha){this.senha = senha;}
     public void setAtivo(boolean ativo) {this.ativo = ativo;}
-    public void setAlugueis(ArrayList<Aluguel> alugueis){
-        this.alugueis = alugueis;
-    }
-    // ClientesDAO
-
-    // EnderecoDAO
-    public int getTamanhoLista(){return alugueis.size();}
 
     // ########## CLIENTE ##########
     public void insertCliente(Cliente cliente){
