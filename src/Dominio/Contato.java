@@ -1,7 +1,9 @@
 package Dominio;
-import Dominio.Cliente;
+
+import Persistencia.ContatoDAO;
 
 public class Contato {
+    private ContatoDAO contatoDAO;
     private String pk_fk_cpf;
     private String email;
     private String celular;
@@ -9,7 +11,7 @@ public class Contato {
     private String telComercial;
 
     public Contato(){
-
+        contatoDAO = new ContatoDAO();
     }
 
 
@@ -20,6 +22,7 @@ public class Contato {
         this.celular = celular;
         this.telFixo = telFixo;
         this.telComercial = telComercial;
+        contatoDAO = new ContatoDAO();
     }
 
     // Getters
@@ -35,4 +38,17 @@ public class Contato {
     public void setCelular(String celular) {this.celular = celular; }
     public void setTelFixo(String telFixo) {this.telFixo = telFixo; }
     public void setTelComercial(String telComercial) {this.telComercial = telComercial; }
+
+    public void insertContatoDAO(Contato contato){
+        contatoDAO.setInserir(contato);
+    }
+    public void deleteContatoDAO(String cpf){
+        contatoDAO.excluir(cpf);
+    }
+    public void updateContatoDAO(Contato contato){
+        contatoDAO.setAlterar(contato);
+    }
+    public void queryContatoDAO(String cpf){
+        contatoDAO.getContato(cpf);
+    }
 }

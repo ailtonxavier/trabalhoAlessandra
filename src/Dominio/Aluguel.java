@@ -1,6 +1,11 @@
 package Dominio;
 
+import Persistencia.AluguelDAO;
+import java.util.ArrayList;
+
 public class Aluguel {
+    private AluguelDAO aluguelDAO;
+    private ArrayList<Aluguel> alugueis;
     private String fk_cpf;
     private int id;
     private String data;
@@ -11,7 +16,8 @@ public class Aluguel {
     private double valorTotal;
 
     public Aluguel(){
-
+        alugueis = new ArrayList<Aluguel>();
+        aluguelDAO = new AluguelDAO();
     }
     public Aluguel(String fk_cpf, int id, String data, String dataDaReserva, String hora, String horaDaReserva,int qtdHoras, double valorTotal){
         this.fk_cpf = fk_cpf;
@@ -22,6 +28,8 @@ public class Aluguel {
         this.horaDaReserva = horaDaReserva;
         this.qtdHoras = qtdHoras;
         this.valorTotal = valorTotal;
+        alugueis = new ArrayList<Aluguel>();
+        aluguelDAO = new AluguelDAO();
     }
 
     //Getters
@@ -49,4 +57,20 @@ public class Aluguel {
 
     public void setQtdHoras(int qtdHoras) {this.qtdHoras = qtdHoras;}
     public void setValorTotal(double valorTotal) {this.valorTotal = valorTotal;}
+
+    public void insertAluguel(Aluguel aluguel){
+        aluguelDAO.setInserir(aluguel);
+    }
+    public void deleteAluguel(String cpf){
+        aluguelDAO.excluir(cpf);
+    }
+    public void deleteAluguel(int id){
+        aluguelDAO.excluir(id);
+    }
+    public void queryAluguel(String cpf){
+        aluguelDAO.getAluguelPorCpf(cpf);
+    }
+    public ArrayList<Aluguel> queryAlugueis(){
+        return alugueis = aluguelDAO.getRelatorio();
+    }
 }

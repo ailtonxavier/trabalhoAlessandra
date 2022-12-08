@@ -6,52 +6,27 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Dominio.*;
-/*
-import Persistencia.ClienteDAO;
-import Persistencia.EnderecoDAO;
-import Persistencia.ContatoDAO;
-import Persistencia.AluguelDAO;
-*/
-
-//imports
-
-import Persistencia.*;
 
 public class Principal {
     public static void main(String[] args) {
-
-        String data = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        String hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-        System.out.println(hora);
-        System.out.println(data);
-
-        // variaveis
         Scanner teclado = new Scanner(System.in);
         int op, op2, op3, i;
         int idaux, idaux2, auxQtdHoras, auxValorTotal;
         String cpfaux, auxDataLocal, auxHoraLocal, auxData, auxHoraReserva;
-        ClienteDAO clienteDAO = new ClienteDAO();
-        EnderecoDAO enderecoDAO = new EnderecoDAO();
-        ContatoDAO contatoDAO = new ContatoDAO();
-        AluguelDAO aluguelDAO = new AluguelDAO();
+
         ArrayList<Cliente> clientes;
         ArrayList<Aluguel> alugueis;
         Contato contatoVisao;
         Cliente clienteVisao;
         Endereco enderecoVisao;
         Aluguel aluguelVisao;
-        // fim das variaveis
 
-        // CPF/NOME/LOGIN/SENHA/ATIVO
 
-        // programa
-        /*
-        MENU PRINCIPAL
-        MENU DE CLIENTES
-        MENU DE ALUGUEIS
-        MENU DE CAMPO
-        SAIR
-        */
+        clienteVisao = new Cliente();
+        contatoVisao = new Contato();
+        enderecoVisao = new Endereco();
+        aluguelVisao = new Aluguel();
+
         do {
             System.out.println("------------------------------------");
             System.out.println("--------- MENU DE PRINCIPAL --------");
@@ -86,14 +61,10 @@ public class Principal {
                                 System.out.println("INSERIR CONTATO");
                                 System.out.println("DIGITE O CPF DO CLIENTE: ");
                                 cpfaux = teclado.nextLine();
-                                clienteVisao = clienteDAO.getCliente(cpfaux);
-                                if(clienteVisao == null){
-                                    clienteVisao = new Cliente();
-                                    contatoVisao = new Contato();
-                                    enderecoVisao = new Endereco();
+                                if(clienteVisao.queryCliente(cpfaux) == null){
 
+                                    clienteVisao.setPk_cpf(cpfaux);
 
-                                    clienteVisao.setPk_cpf(cpfaux); // cpf pego logo acima
                                     System.out.println("DIGITE O NOME: ");
                                     clienteVisao.setNome(teclado.nextLine());
                                     System.out.println("DIGITE O LOGIN: ");
@@ -101,7 +72,8 @@ public class Principal {
                                     System.out.println("DIGITE A SENHA: ");
                                     clienteVisao.setSenha(teclado.nextLine());
                                     clienteVisao.setAtivo(true);
-                                    clienteVisao.setClienteDAO(clienteVisao);
+                                    clienteVisao.insertCliente(clienteVisao);
+                                    // contato
                                     contatoVisao.setPk_fk_cpf(cpfaux);
                                     System.out.println("DIGITE SEU EMAIL: ");
                                     contatoVisao.setEmail(teclado.nextLine());
@@ -112,6 +84,7 @@ public class Principal {
                                     System.out.println("DIGITE SEU TELEFONE COMERCIAL: ");
                                     contatoVisao.setTelComercial(teclado.nextLine());
                                     System.out.println("DIGITE SUA CIDADE: ");
+                                    // endereço
                                     enderecoVisao.setCidade(teclado.nextLine());
                                     System.out.println("DIGITE SEU BAIRRO: ");
                                     enderecoVisao.setBairro(teclado.nextLine());
@@ -121,10 +94,11 @@ public class Principal {
                                     enderecoVisao.setRua(teclado.nextLine());
                                     System.out.println("DIGITE O NUMERO DA CASA: ");
                                     enderecoVisao.setNumero(teclado.nextLine());
-                                    enderecoVisao.setPk_fk_cpf(cpfaux);
-                                    clienteVisao.setContatoDAO(contatoVisao);
-                                    clienteVisao.setEnderecoDAO(enderecoVisao);
 
+                                    enderecoVisao.setPk_fk_cpf(cpfaux);
+
+                                    clienteVisao.insertContato(contatoVisao);
+                                    clienteVisao.insertEndereco(enderecoVisao);
                                     System.out.println("CLIENTE INSERIDO COM SUCESSO!");
                                 } else {
                                     System.out.println("Cliente já cadastrado");
@@ -137,13 +111,12 @@ public class Principal {
                                 System.out.println("BUSCANDO CONTATO");
                                 System.out.println("DIGITE O CPF DO CONTATO: ");
                                 cpfaux = teclado.nextLine();
-                                clienteVisao = clienteDAO.getCliente(cpfaux);
-                                if(clienteVisao != null){
-                                    System.out.println("CPF: " + clienteVisao.getPk_cpf());
-                                    System.out.println("NOME: " + clienteVisao.getNome());
-                                    System.out.println("LOGIN: " + clienteVisao.getLogin());
-                                    System.out.println("SENHA: " + clienteVisao.getSenha());
-                                    System.out.println("ATIVO: " + clienteVisao.getAtivo());
+                                if(clienteVisao.queryCliente(cpfaux) != null){
+                                    System.out.println("NOME: " + clienteVisao.queryCliente(cpfaux).getNome());
+                                    System.out.println("CPF: " + clienteVisao.queryCliente(cpfaux).getPk_cpf());
+                                    System.out.println("LOGIN: " + clienteVisao.queryCliente(cpfaux).getLogin());
+                                    System.out.println("SENHA: " + clienteVisao.queryCliente(cpfaux).getSenha());
+                                    System.out.println("ATIVO: " + clienteVisao.queryCliente(cpfaux).getAtivo());
                                 } else {
                                     System.out.println("CLIENTE NÃO CADASTRADO!");
                                 }
@@ -152,7 +125,7 @@ public class Principal {
                                 /*########################################
                                 ########## RELATÓRIO DE CLIENTES #########
                                 #########################################*/
-                                clientes = clienteDAO.getRelatorio();
+                                clientes = clienteVisao.queryClientes();
                                 for(i = 0; i < clientes.size(); i++){
                                     System.out.println("####################################\n");
                                     System.out.println("CPF: "+ clientes.get(i).getPk_cpf());
@@ -170,8 +143,7 @@ public class Principal {
                                 System.out.println("ALTERANDO CONTATO");
                                 System.out.println("DIGITE O CPF DO CLIENTE: ");
                                 cpfaux = teclado.nextLine();
-                                clienteVisao = clienteDAO.getCliente(cpfaux);
-                                if(clienteVisao != null){
+                                if(clienteVisao.queryCliente(cpfaux) != null){
                                     clienteVisao = new Cliente();
                                     contatoVisao = new Contato();
                                     enderecoVisao = new Endereco();
@@ -213,10 +185,10 @@ public class Principal {
                                         System.out.println("DIGITE O NÚMERO DA SUA CASA: ");
                                         enderecoVisao.setNumero(teclado.nextLine());
                                     }
-                                    enderecoDAO.setAlterar(enderecoVisao);
-                                    contatoDAO.setAlterar(contatoVisao);
+                                    clienteVisao.insertEndereco(enderecoVisao);
+                                    clienteVisao.insertContato(contatoVisao);
                                     clienteVisao.setAtivo(true);
-                                    clienteDAO.setAlterar(clienteVisao);
+                                    clienteVisao.updateCliente(clienteVisao);
                                     System.out.println("ALTERAÇÃO EFETUADA COM SUCESSO");
                                 } else {
                                     System.out.println("CONTATO NÃO CADASTRADO!");
@@ -229,12 +201,11 @@ public class Principal {
                                 System.out.println("EXCLUINDO CONTATO...");
                                 System.out.println("DIGITE O CPF DO CLIENTE: ");
                                 cpfaux = teclado.nextLine();
-                                clienteVisao = clienteDAO.getCliente(cpfaux);
-                                if(clienteVisao != null){
-                                    clienteVisao.excluirAluguelDAO(cpfaux);
-                                    clienteVisao.excluirContatoDAO(cpfaux);
-                                    clienteVisao.excluirEnderecoDAO(cpfaux);
-                                    clienteVisao.excluirClienteDAO(cpfaux);
+                                if(clienteVisao.queryCliente(cpfaux) != null){
+                                    clienteVisao.deleteAluguel(cpfaux);
+                                    clienteVisao.deleteContato(cpfaux);
+                                    clienteVisao.deleteEndereco(cpfaux);
+                                    clienteVisao.deleteCliente(cpfaux);
                                     System.out.println("EXCLUSÃO REALIZADA COM SUCESSO");
                                 } else {
                                     System.out.println("CONTATO NÃO CADASTRADO");
@@ -274,7 +245,7 @@ public class Principal {
                                 * */
                                     System.out.println("DIGITE O CPF DO CLIENTE: ");
                                     cpfaux = teclado.nextLine();
-                                    if (clienteDAO.getCliente(cpfaux) != null) {
+                                    if (clienteVisao.queryCliente(cpfaux) != null) {
                                         auxDataLocal = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                                         auxHoraLocal = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
                                         System.out.print("DIGITE A DATA DA RESERVA\nDD/MM/AAAA: ");
@@ -292,7 +263,7 @@ public class Principal {
                                         aluguelVisao.setHoraDaReserva(auxHoraLocal);
                                         aluguelVisao.setData(auxData);
                                         aluguelVisao.setHora(auxHoraReserva);
-                                        aluguelDAO.setInserir(aluguelVisao);
+                                        aluguelVisao.insertAluguel(aluguelVisao);
                                         do {
                                             System.out.println("DESEJA ALUGAR COM MAIS UMA PESSOA?\n1 - NÃO\t 2 - SIM");
                                             op3 = teclado.nextInt();
@@ -310,7 +281,7 @@ public class Principal {
                                                 aluguelVisao.setHoraDaReserva(auxHoraLocal);
                                                 aluguelVisao.setData(auxData);
                                                 aluguelVisao.setHora(auxHoraReserva);
-                                                aluguelDAO.setInserir(aluguelVisao);
+                                                aluguelVisao.insertAluguel(aluguelVisao);
                                             } else {
                                                 System.out.println("VOLTANDO AO MENU ANTERIOR!");
                                             }
@@ -325,39 +296,36 @@ public class Principal {
                                 /*#######################################
                                 ############ BUSCAR ALUGUEL #############
                                 #######################################*/
-                                // ALTERAR
-                                Cliente cliente;
                                 System.out.println("Digite o CPF do cliente desejado: ");
                                 cpfaux = teclado.nextLine();
 
-                                cliente = clienteDAO.getCliente(cpfaux);
-                                if(cliente==null)
+                                if(clienteVisao.queryCliente(cpfaux) == null)
                                     System.out.println("Cliente não cadastrado!");
                                 else {
                                     System.out.println("Cliente localizado!");
-                                    System.out.println("Nome: " + cliente.getNome());
-                                    cliente.setAlugueis(aluguelDAO.getAluguel(cliente.getPk_cpf()));
-                                    System.out.println("Relat?rio de dependentes...");
-                                    for (i = 0; i < cliente.getTamanhoLista(); i++) {
+//                                    System.out.println("Nome: " + cliente.getNome());
+//                                    cliente.setAlugueis(aluguelDAO.getAluguelPorCpf(cliente.getPk_cpf()));
+                                    System.out.println("RELATÓRIO DE ALUGUEIS DE "+ clienteVisao.getNome());
+                                    for(i = 0; i < clienteVisao.queryClientes().size(); i++){
                                         System.out.println("-----------------------------");
-                                        System.out.println("CPF DO CLIENTE: " + cliente.getAlugueis().get(i).getFk_cpf());
-                                        System.out.println("ID: " + cliente.getAlugueis().get(i).getId());
-                                        System.out.println("DATA: " + cliente.getAlugueis().get(i).getData());
-                                        System.out.println("DATA DA RESERVA: " + cliente.getAlugueis().get(i).getDataDaReserva());
-                                        System.out.println("HORA: " + cliente.getAlugueis().get(i).getHora());
-                                        System.out.println("QUANTIDADE DE HORAS: " + cliente.getAlugueis().get(i).getQtdHoras());
-                                        System.out.println("HORA DA RESERVAS: " + cliente.getAlugueis().get(i).getHoraDaReserva());
-                                        System.out.println("VALOR TOTAL: " + cliente.getAlugueis().get(i).getValorTotal());
+                                        System.out.println("CPF DO CLIENTE: " + clienteVisao.getAlugueis().get(i).getFk_cpf());
+                                        System.out.println("ID: " + clienteVisao.getAlugueis().get(i).getId());
+                                        System.out.println("DATA: " + clienteVisao.getAlugueis().get(i).getData());
+                                        System.out.println("DATA DA RESERVA: " + clienteVisao.getAlugueis().get(i).getDataDaReserva());
+                                        System.out.println("HORA: " + clienteVisao.getAlugueis().get(i).getHora());
+                                        System.out.println("QUANTIDADE DE HORAS: " + clienteVisao.getAlugueis().get(i).getQtdHoras());
+                                        System.out.println("HORA DA RESERVAS: " + clienteVisao.getAlugueis().get(i).getHoraDaReserva());
+                                        System.out.println("VALOR TOTAL: " + clienteVisao.getAlugueis().get(i).getValorTotal());
                                     }
                                 }
                                 break;
                             case 3:
-                                alugueis = aluguelDAO.getRelatorio();
+                                alugueis = aluguelVisao.queryAlugueis();
                                 for(i = 0; i < alugueis.size(); i++){
-                                    clienteVisao = clienteDAO.getCliente(alugueis.get(i).getFk_cpf());
-                                    System.out.println("####################################\n");
+                                    clienteVisao.queryAlugueis();
+                                    System.out.println("####################################");
+                                    System.out.println("NOME: "+ clienteVisao.queryCliente(alugueis.get(i).getFk_cpf()).getNome());
                                     System.out.println("ID: "+ alugueis.get(i).getId());
-                                    System.out.println("NOME: "+ clienteVisao.getNome());
                                     System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
                                     System.out.println("DATA: "+ alugueis.get(i).getData());
                                     System.out.println("DATA DA RESERVA: "+ alugueis.get(i).getDataDaReserva());
@@ -374,13 +342,13 @@ public class Principal {
                                 #######################################*/
                                 System.out.println("DIGITE O ID DO ALUGUEL\nQUE DESEJA EXCLUIR: ");
                                 idaux = teclado.nextInt();
-                                aluguelDAO.excluir(idaux);
+                                aluguelVisao.deleteAluguel(idaux);
                                 System.out.println("ALUGUEL EXCLUIDO COM SUCESSO!");
                                 break;
                             case 5:
                                 System.out.println("DIGITE O CPF DE QUEM DESEJA EXCLUIR: ");
                                 cpfaux = teclado.nextLine();
-                                aluguelDAO.excluir(cpfaux);
+                                aluguelVisao.deleteAluguel(cpfaux);
                                 System.out.println("ALUGUEL EXCLUIDO COM SUCESSO!");
                                 break;
                             default:

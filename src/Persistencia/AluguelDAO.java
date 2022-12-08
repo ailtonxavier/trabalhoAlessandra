@@ -39,7 +39,7 @@ public class AluguelDAO {
         return lista;
     }
 
-    public ArrayList<Aluguel> getAluguel(String pk_fk_cpf){
+    public ArrayList<Aluguel> getAluguelPorCpf(String pk_fk_cpf){
         Aluguel aluguel = null;
         ArrayList<Aluguel> lista = new ArrayList<Aluguel>();
         try{

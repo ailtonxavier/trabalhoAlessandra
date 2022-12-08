@@ -8,11 +8,12 @@ import Persistencia.EnderecoDAO;
 import java.util.ArrayList;
 
 public class Cliente {
-    AluguelDAO aluguelDAO = new AluguelDAO();
-    EnderecoDAO enderecoDAO = new EnderecoDAO();
-    ContatoDAO contatoDAO = new ContatoDAO();
-    ClienteDAO clienteDAO = new ClienteDAO();
-    Cliente cliente;
+    private AluguelDAO aluguelDAO = new AluguelDAO();
+    private EnderecoDAO enderecoDAO = new EnderecoDAO();
+    private ContatoDAO contatoDAO = new ContatoDAO();
+    private ClienteDAO clienteDAO = new ClienteDAO();
+    private Aluguel aluguel;
+    private Cliente cliente;
     private String pk_cpf;
     private String nome;
     private String login;
@@ -20,12 +21,14 @@ public class Cliente {
     private boolean ativo;
     private Endereco endereco;
     private Contato contato;
+    private ArrayList<Cliente> clientes;
     private ArrayList<Aluguel> alugueis;
 
     public Cliente(){
         endereco = new Endereco();
         contato = new Contato();
         alugueis = new ArrayList<>();
+        aluguel = new Aluguel();
     }
     public Cliente(String pk_cpf, String nome, String login, String senha, boolean ativo){
         this.pk_cpf = pk_cpf;
@@ -33,9 +36,11 @@ public class Cliente {
         this.login = login;
         this.senha = senha;
         this.ativo = ativo;
-        alugueis = new ArrayList<>();
+        aluguel = new Aluguel();
+        alugueis = new ArrayList<Aluguel>();
         contato = new Contato();
         endereco = new Endereco();
+        cliente = new Cliente();
     }
 
     // Getters
@@ -57,32 +62,66 @@ public class Cliente {
         this.alugueis = alugueis;
     }
     // ClientesDAO
-    public void setClienteDAO(Cliente cliente){
-        this.cliente = cliente;
-        clienteDAO.setInserir(this.cliente);
-    }
-    public void excluirClienteDAO(String pk_cpf){
-        clienteDAO.excluir(pk_cpf);
-    }
+
     // EnderecoDAO
-    public void setEnderecoDAO(Endereco endereco){
-        this.endereco = endereco;
-        enderecoDAO.setInserir(this.endereco);
-    }
-    // AluguelDAO
-    public void setContatoDAO(Contato contato){
-        this.contato = contato;
-        contatoDAO.setInserir(contato);
-    }
-    // ContatoDAO
-    public void excluirContatoDAO(String pk_cpf){
-        contatoDAO.excluir(pk_cpf);
-    }
-    public void excluirAluguelDAO(String pk_cpf){
-        aluguelDAO.excluir(pk_cpf);
-    }
-    public void excluirEnderecoDAO(String pk_cpf){
-        enderecoDAO.excluir(pk_cpf);
-    }
     public int getTamanhoLista(){return alugueis.size();}
+
+    // ########## CLIENTE ##########
+    public void insertCliente(Cliente cliente){
+        this.clienteDAO.setInserir(cliente);
+    }
+    public void deleteCliente(String cpf){
+        this.clienteDAO.excluir(cpf);
+    }
+    public void updateCliente(Cliente cliente){
+        this.clienteDAO.setAlterar(cliente);
+    }
+    public Cliente queryCliente(String cpf){
+        return this.clienteDAO.getCliente(cpf);
+    }
+    public ArrayList<Cliente> queryClientes(){
+        return this.clienteDAO.getRelatorio();
+    }
+    // ########## CONTATO ##########
+    public void insertContato(Contato contato){
+        this.contato.insertContatoDAO(contato);
+    }
+    public void deleteContato(String cpf){
+        this.contato.deleteContatoDAO(cpf);
+    }
+    public void updateContato(Contato contato){
+        this.contato.updateContatoDAO(contato);
+    }
+    public void queryContato(String cpf){
+        this.contato.queryContatoDAO(cpf);
+    }
+    // ########## ENDEREÇO ##########
+    public void insertEndereco(Endereco endereco){
+        this.endereco.insertEnderecoDAO(endereco);
+    }
+    public void deleteEndereco(String cpf){
+        this.endereco.deleteEnderecoDAO(cpf);
+    }
+    public void updateEndereco(Endereco endereco){
+        this.endereco.updateEnderecoDAO(endereco);
+    }
+    public void queryEndereco(String cpf){
+        this.endereco.queryEnderecoDAO(cpf);
+    }
+    // ########## ALUGUEL ##########
+    public void inserAluguel(Aluguel aluguel){
+        this.aluguel.insertAluguel(aluguel);
+    }
+    public void deleteAluguel(String cpf){
+        this.aluguel.deleteAluguel(cpf);
+    }
+    public void queryAluguelPorCpf(String cpf){
+        this.aluguel.queryAluguel(cpf);
+    }
+    public void deleteAluguelPorID(int id){
+        this.aluguel.deleteAluguel(id);
+    }
+    public ArrayList<Aluguel> queryAlugueis(){
+        return this.aluguel.queryAlugueis();
+    }
 }

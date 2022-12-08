@@ -1,6 +1,9 @@
 package Dominio;
 
+import Persistencia.EnderecoDAO;
+
 public class Endereco {
+    private EnderecoDAO enderecoDAO;
     private String pk_fk_cpf;
     private String estado;
     private String cidade;
@@ -9,7 +12,7 @@ public class Endereco {
     private String numero; // pode ser sem número, por isso o String
 
     public Endereco(){
-
+        enderecoDAO = new EnderecoDAO();
     }
 
     public Endereco(String pk_fk_cpf, String estado, String cidade, String bairro, String rua, String numero) {
@@ -19,6 +22,7 @@ public class Endereco {
         this.bairro = bairro;
         this.rua = rua;
         this.numero = numero;
+        enderecoDAO = new EnderecoDAO();
     }
     //Getters
     public String getPk_fk_cpf() {return pk_fk_cpf; }
@@ -35,4 +39,17 @@ public class Endereco {
     public void setBairro(String bairro) {this.bairro = bairro;}
     public void setRua(String rua) {this.rua = rua;}
     public void setNumero(String numero) {this.numero = numero;}
+
+    public void insertEnderecoDAO(Endereco endereco){
+        enderecoDAO.setInserir(endereco);
+    }
+    public void deleteEnderecoDAO(String cpf){
+        enderecoDAO.excluir(cpf);
+    }
+    public void updateEnderecoDAO(Endereco endereco){
+        enderecoDAO.setAlterar(endereco);
+    }
+    public void queryEnderecoDAO(String cpf){
+        enderecoDAO.getEndereco(cpf);
+    }
 }
