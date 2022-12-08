@@ -9,7 +9,7 @@ public class Endereco {
     private String cidade;
     private String bairro;
     private String rua;
-    private String numero; // pode ser sem número, por isso o String
+    private String numero;
 
     public Endereco(){
         enderecoDAO = new EnderecoDAO();
