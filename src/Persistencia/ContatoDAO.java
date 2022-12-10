@@ -9,7 +9,7 @@ public class ContatoDAO {
     private Conexao conexaoContatoDAO;
     private String inserir = "insert into contato (pk_fk_cpf,email,celular,telFixo,telComercial) values (?,?,?,?,?)";
     private String buscar = "select * from contato where pk_cpf = ?";
-    private String alterar = "update contato set pk_fk_cpf = ?, email = ?, celular = ?, telFixo = ?, telComercial = ? where pk_cpf = ?";
+    private String alterar = "update contato set pk_fk_cpf = ?, email = ?, celular = ?, telFixo = ?, telComercial = ? where pk_fk_cpf = ?";
     private String deletar = "delete from contato where pk_fk_cpf = ?";
 
     public ContatoDAO(){
@@ -57,10 +57,11 @@ public class ContatoDAO {
             instrucao.setString(3, contato.getCelular());
             instrucao.setString(4, contato.getTelFixo());
             instrucao.setString(5, contato.getTelComercial());
+            instrucao.setString(6, contato.getPk_fk_cpf());
             instrucao.execute();
             conexaoContatoDAO.desconectar();
         } catch (Exception e){
-            System.out.println("Erro na alteração: " + e.getMessage());
+            System.out.println("Erro na alteração de contato: " + e.getMessage());
         }
     }
     public void excluir(String pk_fk_cpf){

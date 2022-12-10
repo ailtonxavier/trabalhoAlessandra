@@ -61,10 +61,11 @@ public class EnderecoDAO {
                         instrucao.setString(4, endereco.getBairro());
                         instrucao.setString(5, endereco.getRua());
                         instrucao.setString(6, endereco.getNumero());
+                        instrucao.setString(7, endereco.getPk_fk_cpf());
                         instrucao.execute();
                         conexaoEnderecoDAO.desconectar();
                 } catch (Exception e){
-                        System.out.println("Erro na alteração: " + e.getMessage());
+                        System.out.println("Erro na alteração do endereço: " + e.getMessage());
                 }
         }
 

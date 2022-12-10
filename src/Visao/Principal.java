@@ -62,7 +62,6 @@ public class Principal {
                                 System.out.println("DIGITE O CPF DO CLIENTE: ");
                                 cpfaux = teclado.nextLine();
                                 if(clienteVisao.queryCliente(cpfaux) == null){
-
                                     clienteVisao.setPk_cpf(cpfaux);
 
                                     System.out.println("DIGITE O NOME: ");
@@ -127,13 +126,12 @@ public class Principal {
                                 #########################################*/
                                 clientes = clienteVisao.queryClientes();
                                 for(i = 0; i < clientes.size(); i++){
-                                    System.out.println("####################################\n");
                                     System.out.println("CPF: "+ clientes.get(i).getPk_cpf());
                                     System.out.println("NOME: "+ clientes.get(i).getNome());
                                     System.out.println("LOGIN: "+ clientes.get(i).getLogin());
                                     System.out.println("SENHA: "+ clientes.get(i).getSenha());
                                     System.out.println("ATIVO: "+ clientes.get(i).getAtivo());
-                                    System.out.println("####################################\n");
+                                    System.out.println("####################################");
                                 }
                                 break;
                             case 4:
@@ -145,8 +143,6 @@ public class Principal {
                                 cpfaux = teclado.nextLine();
                                 if(clienteVisao.queryCliente(cpfaux) != null){
                                     clienteVisao = new Cliente();
-                                    contatoVisao = new Contato();
-                                    enderecoVisao = new Endereco();
                                     clienteVisao.setPk_cpf(cpfaux);
                                     System.out.println("DIGITE O NOVO NOME: ");
                                     clienteVisao.setNome(teclado.nextLine());
@@ -154,10 +150,12 @@ public class Principal {
                                     clienteVisao.setLogin(teclado.nextLine());
                                     System.out.println("DIGITE A NOVA SENHA: ");
                                     clienteVisao.setSenha(teclado.nextLine());
+                                    clienteVisao.updateCliente(clienteVisao);
                                     System.out.println("DESEJA ALTERAR SEU CONTATO:\n");
                                     System.out.println("1-SIM \t 2-NÃO");
-                                    idaux = teclado.nextInt();
-                                    if(idaux == 1){
+                                    if(teclado.nextInt() == 1){
+                                        teclado.nextLine();
+                                        contatoVisao = new Contato();
                                         contatoVisao.setPk_fk_cpf(cpfaux);
                                         System.out.println("DIGITE O NOVO EMAIL: ");
                                         contatoVisao.setEmail(teclado.nextLine());
@@ -167,12 +165,15 @@ public class Principal {
                                         contatoVisao.setTelFixo(teclado.nextLine());
                                         System.out.println("DIGITE SEU NOVO TELEFONE COMERCIAL: ");
                                         contatoVisao.setTelComercial(teclado.nextLine());
+                                        clienteVisao.updateContato(contatoVisao);
+                                    } else {
+                                        clienteVisao.updateContato(clienteVisao.getContato());
                                     }
-                                    teclado.nextLine();
                                     System.out.println("DESEJA ALTERAR O ENDEREÇO: \n");
                                     System.out.println("1- SIM \t 2- NÃO");
-                                    idaux2 = teclado.nextInt();
-                                    if(idaux2 == 1){
+                                    if(teclado.nextInt() == 1){
+                                        teclado.nextLine();
+                                        enderecoVisao = new Endereco();
                                         enderecoVisao.setPk_fk_cpf(cpfaux);
                                         System.out.println("DIGITE SEU ESTADO: ");
                                         enderecoVisao.setEstado(teclado.nextLine());
@@ -184,9 +185,10 @@ public class Principal {
                                         enderecoVisao.setRua(teclado.nextLine());
                                         System.out.println("DIGITE O NÚMERO DA SUA CASA: ");
                                         enderecoVisao.setNumero(teclado.nextLine());
+                                        clienteVisao.updateEndereco(enderecoVisao);
+                                    } else {
+                                        clienteVisao.updateEndereco(clienteVisao.getEndereco());
                                     }
-                                    clienteVisao.insertEndereco(enderecoVisao);
-                                    clienteVisao.insertContato(contatoVisao);
                                     clienteVisao.setAtivo(true);
                                     clienteVisao.updateCliente(clienteVisao);
                                     System.out.println("ALTERAÇÃO EFETUADA COM SUCESSO");
@@ -323,7 +325,6 @@ public class Principal {
                                 alugueis = aluguelVisao.queryAlugueis();
                                 for(i = 0; i < alugueis.size(); i++){
                                     clienteVisao.queryAlugueis();
-                                    System.out.println("####################################");
                                     System.out.println("NOME: "+ clienteVisao.queryCliente(alugueis.get(i).getFk_cpf()).getNome());
                                     System.out.println("ID: "+ alugueis.get(i).getId());
                                     System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
@@ -333,7 +334,7 @@ public class Principal {
                                     System.out.println("HORA DA RESERVA: "+ alugueis.get(i).getHoraDaReserva());
                                     System.out.println("QUANTIDADE DE HORAS RESERVADAS: "+alugueis.get(i).getQtdHoras());
                                     System.out.println("VALOR TOTAL: "+ alugueis.get(i).getValorTotal());
-                                    System.out.println("####################################\n");
+                                    System.out.println("####################################");
                                 }
                                 break;
                             case 4:
@@ -354,6 +355,7 @@ public class Principal {
                             default:
                                 System.out.println("VOCÊ É BURRO?"); break;
                         }
+                        System.out.println("");
                     }while(op2 != 6);
                     break;
                 case 3:

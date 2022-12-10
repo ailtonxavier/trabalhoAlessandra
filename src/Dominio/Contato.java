@@ -32,12 +32,14 @@ public class Contato {
     public String getTelFixo() {return telFixo; }
     public String getTelComercial() {return telComercial; }
 
-    //Setters
+    // Setters
     public void setPk_fk_cpf(String pk_fk_cpf) {this.pk_fk_cpf = pk_fk_cpf;}
     public void setEmail(String email) {this.email = email; }
     public void setCelular(String celular) {this.celular = celular; }
     public void setTelFixo(String telFixo) {this.telFixo = telFixo; }
     public void setTelComercial(String telComercial) {this.telComercial = telComercial; }
+
+    // DAO
 
     public void insertContatoDAO(Contato contato){
         contatoDAO.setInserir(contato);
