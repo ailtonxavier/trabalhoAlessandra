@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 public class ContatoDAO {
     private Conexao conexaoContatoDAO;
     private String inserir = "insert into contato (pk_fk_cpf,email,celular,telFixo,telComercial) values (?,?,?,?,?)";
-    private String buscar = "select * from contato where pk_cpf = ?";
+    private String buscar = "select * from contato where pk_fk_cpf = ?";
     private String alterar = "update contato set pk_fk_cpf = ?, email = ?, celular = ?, telFixo = ?, telComercial = ? where pk_fk_cpf = ?";
     private String deletar = "delete from contato where pk_fk_cpf = ?";
 

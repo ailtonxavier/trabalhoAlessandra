@@ -50,7 +50,7 @@ public class Contato {
     public void updateContatoDAO(Contato contato){
         contatoDAO.setAlterar(contato);
     }
-    public void queryContatoDAO(String cpf){
-        contatoDAO.getContato(cpf);
+    public Contato queryContatoDAO(String cpf){
+        return contatoDAO.getContato(cpf);
     }
 }

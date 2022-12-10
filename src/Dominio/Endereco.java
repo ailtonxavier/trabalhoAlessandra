@@ -49,7 +49,7 @@ public class Endereco {
     public void updateEnderecoDAO(Endereco endereco){
         enderecoDAO.setAlterar(endereco);
     }
-    public void queryEnderecoDAO(String cpf){
-        enderecoDAO.getEndereco(cpf);
+    public Endereco queryEnderecoDAO(String cpf){
+        return enderecoDAO.getEndereco(cpf);
     }
 }

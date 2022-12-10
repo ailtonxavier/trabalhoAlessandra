@@ -1,5 +1,6 @@
 package Visao;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -10,8 +11,8 @@ import Dominio.*;
 public class Principal {
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
-        int op, op2, op3, i;
-        int idaux, idaux2, auxQtdHoras, auxValorTotal;
+        int op, op2, i;
+        int idaux, auxQtdHoras, auxValorTotal;
         String cpfaux, auxDataLocal, auxHoraLocal, auxData, auxHoraReserva;
 
         ArrayList<Cliente> clientes;
@@ -111,11 +112,27 @@ public class Principal {
                                 System.out.println("DIGITE O CPF DO CONTATO: ");
                                 cpfaux = teclado.nextLine();
                                 if(clienteVisao.queryCliente(cpfaux) != null){
+                                    contatoVisao = clienteVisao.queryContato(cpfaux);
+                                    enderecoVisao = clienteVisao.queryEndereco(cpfaux);
+                                    System.out.println("######################################\n" +
+                                                       "########## DADOS DO CLIENTE ##########\n" +
+                                                       "######################################");
                                     System.out.println("NOME: " + clienteVisao.queryCliente(cpfaux).getNome());
                                     System.out.println("CPF: " + clienteVisao.queryCliente(cpfaux).getPk_cpf());
                                     System.out.println("LOGIN: " + clienteVisao.queryCliente(cpfaux).getLogin());
                                     System.out.println("SENHA: " + clienteVisao.queryCliente(cpfaux).getSenha());
                                     System.out.println("ATIVO: " + clienteVisao.queryCliente(cpfaux).getAtivo());
+                                    System.out.println("########## CONTATO #########");
+                                    System.out.println("CELULAR: "+contatoVisao.getCelular());
+                                    System.out.println("EMAIL: "+contatoVisao.getEmail());
+                                    System.out.println("TELEFONE COMERCIAL: "+contatoVisao.getTelComercial());
+                                    System.out.println("TELEFONE FIXO: "+contatoVisao.getTelFixo());
+                                    System.out.println("########## ENDEREÇO ##########");
+                                    System.out.println("ESTADO: "+enderecoVisao.getEstado());
+                                    System.out.println("CIDADE: "+enderecoVisao.getCidade());
+                                    System.out.println("BAIRRO: "+enderecoVisao.getBairro());
+                                    System.out.println("RUA: "+enderecoVisao.getRua());
+                                    System.out.println("NÚMERO: "+enderecoVisao.getNumero());
                                 } else {
                                     System.out.println("CLIENTE NÃO CADASTRADO!");
                                 }
@@ -126,8 +143,8 @@ public class Principal {
                                 #########################################*/
                                 clientes = clienteVisao.queryClientes();
                                 for(i = 0; i < clientes.size(); i++){
-                                    System.out.println("CPF: "+ clientes.get(i).getPk_cpf());
                                     System.out.println("NOME: "+ clientes.get(i).getNome());
+                                    System.out.println("CPF: "+ clientes.get(i).getPk_cpf());
                                     System.out.println("LOGIN: "+ clientes.get(i).getLogin());
                                     System.out.println("SENHA: "+ clientes.get(i).getSenha());
                                     System.out.println("ATIVO: "+ clientes.get(i).getAtivo());
@@ -230,7 +247,7 @@ public class Principal {
                         System.out.println("1 - ######### ALUGAR CAMPO #########");
                         System.out.println("2 - #### BUSCAR ALUGUEIS POR CPF ###");
                         System.out.println("3 - ##### RELATÓRIO DE ALUGUEIS ####");
-                        System.out.println("4 - ###### EXCLUIR UM ALUGUEL ######");
+                        System.out.println("4 - #### EXCLUIR ALUGUEL POR ID ####");
                         System.out.println("5 - ### EXCLUIR VÁRIOS ALUGUEIS ####");
                         System.out.println("6 - ### VOLTAR AO MENU PRINCIPAL ###");
                         System.out.print("SELECIONE UMA OPÇÃO: ");
@@ -241,10 +258,6 @@ public class Principal {
                                 /*#######################################
                                 ############ ALUGUEL DE CAMPO ###########
                                 #######################################*/
-                                /*
-                                dataaux = A
-                                data
-                                * */
                                     System.out.println("DIGITE O CPF DO CLIENTE: ");
                                     cpfaux = teclado.nextLine();
                                     if (clienteVisao.queryCliente(cpfaux) != null) {
@@ -257,37 +270,16 @@ public class Principal {
                                         System.out.print("DIGITE A QUANTIDADE DE HORAS DA RESERVA: ");
                                         auxQtdHoras = teclado.nextInt();
                                         aluguelVisao = new Aluguel();
-                                        auxValorTotal = aluguelVisao.getQtdHoras() * 50;
-                                        aluguelVisao.setValorTotal(auxValorTotal);
                                         aluguelVisao.setFk_cpf(cpfaux);
-                                        aluguelVisao.setQtdHoras(auxQtdHoras);
-                                        aluguelVisao.setDataDaReserva(auxDataLocal);
-                                        aluguelVisao.setHoraDaReserva(auxHoraLocal);
                                         aluguelVisao.setData(auxData);
                                         aluguelVisao.setHora(auxHoraReserva);
+                                        aluguelVisao.setQtdHoras(auxQtdHoras);
+                                        aluguelVisao.setDataDaReserva(auxDataLocal);
+                                        auxValorTotal = aluguelVisao.getQtdHoras() * 50;
+                                        aluguelVisao.setValorTotal(auxValorTotal);
+                                        aluguelVisao.setHoraDaReserva(auxHoraLocal);
                                         aluguelVisao.insertAluguel(aluguelVisao);
-                                        do {
-                                            System.out.println("DESEJA ALUGAR COM MAIS UMA PESSOA?\n1 - NÃO\t 2 - SIM");
-                                            op3 = teclado.nextInt();
-                                            teclado.nextLine();
-                                            if (op3 != 1) {
-                                                System.out.println("DIGITE O CPF: ");
-                                                cpfaux = teclado.nextLine();
-                                                aluguelVisao = new Aluguel();
-                                                aluguelVisao.setFk_cpf(cpfaux);
-                                                auxValorTotal = aluguelVisao.getQtdHoras() * 50;
-                                                aluguelVisao.setValorTotal(auxValorTotal);
-                                                aluguelVisao.setFk_cpf(cpfaux);
-                                                aluguelVisao.setQtdHoras(auxQtdHoras);
-                                                aluguelVisao.setDataDaReserva(auxDataLocal);
-                                                aluguelVisao.setHoraDaReserva(auxHoraLocal);
-                                                aluguelVisao.setData(auxData);
-                                                aluguelVisao.setHora(auxHoraReserva);
-                                                aluguelVisao.insertAluguel(aluguelVisao);
-                                            } else {
-                                                System.out.println("VOLTANDO AO MENU ANTERIOR!");
-                                            }
-                                        }while(op3 == 2);
+                                        System.out.println("ALUGUEL REALIZADO COM SUCESSO!");
                                     } else {
                                         System.out.println("CADASTRE UM CLIENTE PARA ALUGAR UM CAMPO");
                                     }
@@ -296,36 +288,37 @@ public class Principal {
                                 break;
                             case 2:
                                 /*#######################################
-                                ############ BUSCAR ALUGUEL #############
+                                ####### BUSCAR ALUGUEL POR CPF ##########
                                 #######################################*/
                                 System.out.println("Digite o CPF do cliente desejado: ");
                                 cpfaux = teclado.nextLine();
-
                                 if(clienteVisao.queryCliente(cpfaux) == null)
-                                    System.out.println("Cliente não cadastrado!");
+                                    System.out.println("CLIENTE NÃO CADASTRADO!");
                                 else {
-                                    System.out.println("Cliente localizado!");
-//                                    System.out.println("Nome: " + cliente.getNome());
-//                                    cliente.setAlugueis(aluguelDAO.getAluguelPorCpf(cliente.getPk_cpf()));
-                                    System.out.println("RELATÓRIO DE ALUGUEIS DE "+ clienteVisao.getNome());
-                                    for(i = 0; i < clienteVisao.queryClientes().size(); i++){
-                                        System.out.println("-----------------------------");
-                                        System.out.println("CPF DO CLIENTE: " + clienteVisao.getAlugueis().get(i).getFk_cpf());
-                                        System.out.println("ID: " + clienteVisao.getAlugueis().get(i).getId());
-                                        System.out.println("DATA: " + clienteVisao.getAlugueis().get(i).getData());
-                                        System.out.println("DATA DA RESERVA: " + clienteVisao.getAlugueis().get(i).getDataDaReserva());
-                                        System.out.println("HORA: " + clienteVisao.getAlugueis().get(i).getHora());
-                                        System.out.println("QUANTIDADE DE HORAS: " + clienteVisao.getAlugueis().get(i).getQtdHoras());
-                                        System.out.println("HORA DA RESERVAS: " + clienteVisao.getAlugueis().get(i).getHoraDaReserva());
-                                        System.out.println("VALOR TOTAL: " + clienteVisao.getAlugueis().get(i).getValorTotal());
+                                    System.out.println("CLIENTE LOCALIZADO!");
+                                    clienteVisao = clienteVisao.queryCliente(cpfaux);
+                                    alugueis = aluguelVisao.queryAlugueis();
+                                    for(i = 0; i < alugueis.size(); i++){
+                                        System.out.println("ID: " + alugueis.get(i).getId());
+                                        System.out.println("DATA: " + alugueis.get(i).getData());
+                                        System.out.println("DATA DA RESERVA: " + alugueis.get(i).getHoraDaReserva());
+                                        System.out.println("HORA: " + alugueis.get(i).getHora());
+                                        System.out.println("QUANTIDADE DE HORAS ALUGADAS: "+alugueis.get(i).getQtdHoras());
+                                        System.out.println("VALOR TOTAL: " + alugueis.get(i).getValorTotal());
+                                        System.out.println("####################################");
                                     }
+                                    System.out.println("RELATÓRIO DE ALUGUEIS DE "+ clienteVisao.getNome().toUpperCase());
+                                    System.out.println("CPF DO CLIENTE: "+ clienteVisao.getPk_cpf());
                                 }
                                 break;
                             case 3:
+                                /*#####################################
+                                ####### RELATÓRIO DE ALUGUEIS #########
+                                #####################################*/
                                 alugueis = aluguelVisao.queryAlugueis();
                                 for(i = 0; i < alugueis.size(); i++){
                                     clienteVisao.queryAlugueis();
-                                    System.out.println("NOME: "+ clienteVisao.queryCliente(alugueis.get(i).getFk_cpf()).getNome());
+                                    System.out.println("NOME: "+ clienteVisao.queryCliente(alugueis.get(i).getFk_cpf()).getNome().toUpperCase());
                                     System.out.println("ID: "+ alugueis.get(i).getId());
                                     System.out.println("CPF: "+ alugueis.get(i).getFk_cpf());
                                     System.out.println("DATA: "+ alugueis.get(i).getData());
@@ -339,7 +332,7 @@ public class Principal {
                                 break;
                             case 4:
                                 /*#######################################
-                                ############ DELETAR ALUGUEL ############
+                                ######## DELETAR ALUGUEL POR ID #########
                                 #######################################*/
                                 System.out.println("DIGITE O ID DO ALUGUEL\nQUE DESEJA EXCLUIR: ");
                                 idaux = teclado.nextInt();
@@ -347,13 +340,16 @@ public class Principal {
                                 System.out.println("ALUGUEL EXCLUIDO COM SUCESSO!");
                                 break;
                             case 5:
+                                /*#######################################
+                                ###### DELETAR ALUGUEIS POR CPF #########
+                                #######################################*/
                                 System.out.println("DIGITE O CPF DE QUEM DESEJA EXCLUIR: ");
                                 cpfaux = teclado.nextLine();
                                 aluguelVisao.deleteAluguel(cpfaux);
                                 System.out.println("ALUGUEL EXCLUIDO COM SUCESSO!");
                                 break;
                             default:
-                                System.out.println("VOCÊ É BURRO?"); break;
+                                System.out.println("VOCÊ DIGITOU UM VALOR ERRADO"); break;
                         }
                         System.out.println("");
                     }while(op2 != 6);

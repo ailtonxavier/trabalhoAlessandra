@@ -49,14 +49,18 @@ public class Aluguel {
     public void setId(int id) {this.id = id;}
     public void setData(String data) {this.data = data;}
 
-    public void setDataDaReserva(String dataDaReserva) {this.dataDaReserva = dataDaReserva;}
+    public void setDataDaReserva(String dataDaReserva) {this.dataDaReserva = dataDaReserva ;}
 
     public void setHora(String hora) {this.hora = hora;}
 
     public void setHoraDaReserva(String horaDaReserva) {this.horaDaReserva = horaDaReserva;}
 
     public void setQtdHoras(int qtdHoras) {this.qtdHoras = qtdHoras;}
-    public void setValorTotal(double valorTotal) {this.valorTotal = valorTotal;}
+    public void setValorTotal(double valorTotal) {
+        if(valorTotal == 0){
+            this.valorTotal = qtdHoras * 50;
+        } else this.valorTotal = valorTotal;
+    }
 
     public void insertAluguel(Aluguel aluguel){
         aluguelDAO.setInserir(aluguel);
@@ -67,10 +71,10 @@ public class Aluguel {
     public void deleteAluguel(int id){
         aluguelDAO.excluir(id);
     }
-    public void queryAluguel(String cpf){
-        aluguelDAO.getAluguelPorCpf(cpf);
+    public ArrayList<Aluguel> queryAluguel(String cpf){
+        return aluguelDAO.getAluguelPorCpf(cpf);
     }
     public ArrayList<Aluguel> queryAlugueis(){
-        return alugueis = aluguelDAO.getRelatorio();
+        return aluguelDAO.getRelatorio();
     }
 }

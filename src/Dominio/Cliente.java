@@ -69,6 +69,9 @@ public class Cliente {
     public void updateCliente(Cliente cliente){
         this.clienteDAO.setAlterar(cliente);
     }
+    public void queryClienteVoid(String cpf){
+        this.clienteDAO.getCliente(cpf);
+    }
     public Cliente queryCliente(String cpf){
         return this.clienteDAO.getCliente(cpf);
     }
@@ -85,8 +88,8 @@ public class Cliente {
     public void updateContato(Contato contato){
         this.contato.updateContatoDAO(contato);
     }
-    public void queryContato(String cpf){
-        this.contato.queryContatoDAO(cpf);
+    public Contato queryContato(String cpf){
+        return this.contato.queryContatoDAO(cpf);
     }
     // ########## ENDEREÇO ##########
     public void insertEndereco(Endereco endereco){
@@ -98,8 +101,8 @@ public class Cliente {
     public void updateEndereco(Endereco endereco){
         this.endereco.updateEnderecoDAO(endereco);
     }
-    public void queryEndereco(String cpf){
-        this.endereco.queryEnderecoDAO(cpf);
+    public Endereco queryEndereco(String cpf){
+        return this.endereco.queryEnderecoDAO(cpf);
     }
     // ########## ALUGUEL ##########
     public void inserAluguel(Aluguel aluguel){
@@ -108,8 +111,8 @@ public class Cliente {
     public void deleteAluguel(String cpf){
         this.aluguel.deleteAluguel(cpf);
     }
-    public void queryAluguelPorCpf(String cpf){
-        this.aluguel.queryAluguel(cpf);
+    public ArrayList<Aluguel> queryAluguelPorCpf(String cpf){
+        return this.aluguel.queryAluguel(cpf);
     }
     public void deleteAluguelPorID(int id){
         this.aluguel.deleteAluguel(id);
